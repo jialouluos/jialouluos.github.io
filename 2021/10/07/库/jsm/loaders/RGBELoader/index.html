@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16x16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":320,"Pisces | Gemini":240,"width":280,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="import { 	DataTextureLoader, 	DataUtils, 	FloatType, 	HalfFloatType, 	LinearEncoding, 	LinearFilter, 	NearestFilter, 	RGBEEncoding, 	RGBEFormat, 	RGBFormat, 	UnsignedByteType } from &#39;..&#x2F;..&#x2F;..&#x2F;build&#x2F;th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="迦楼罗s的博客">
+<meta property="og:url" content="http://example.com/2021/10/07/%E5%BA%93/jsm/loaders/RGBELoader/index.html">
+<meta property="og:site_name" content="迦楼罗s的博客">
+<meta property="og:description" content="import { 	DataTextureLoader, 	DataUtils, 	FloatType, 	HalfFloatType, 	LinearEncoding, 	LinearFilter, 	NearestFilter, 	RGBEEncoding, 	RGBEFormat, 	RGBFormat, 	UnsignedByteType } from &#39;..&#x2F;..&#x2F;..&#x2F;build&#x2F;th">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-06T16:10:50.062Z">
+<meta property="article:modified_time" content="2021-07-29T08:03:20.000Z">
+<meta property="article:author" content="迦楼罗s">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/10/07/%E5%BA%93/jsm/loaders/RGBELoader/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 迦楼罗s的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">迦楼罗s的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">3</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">466</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/07/%E5%BA%93/jsm/loaders/RGBELoader/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/HeadImage.jpg">
+      <meta itemprop="name" content="迦楼罗s">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="迦楼罗s的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-07 00:10:50" itemprop="dateCreated datePublished" datetime="2021-10-07T00:10:50+08:00">2021-10-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-29 16:03:20" itemprop="dateModified" datetime="2021-07-29T16:03:20+08:00">2021-07-29</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/10/07/%E5%BA%93/jsm/loaders/RGBELoader/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/10/07/%E5%BA%93/jsm/loaders/RGBELoader/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        import {
+	DataTextureLoader,
+	DataUtils,
+	FloatType,
+	HalfFloatType,
+	LinearEncoding,
+	LinearFilter,
+	NearestFilter,
+	RGBEEncoding,
+	RGBEFormat,
+	RGBFormat,
+	UnsignedByteType
+} from '../../../build/three.module.js';
+
+// https://github.com/mrdoob/three.js/issues/5552
+// http://en.wikipedia.org/wiki/RGBE_image_format
+
+class RGBELoader extends DataTextureLoader {
+
+	constructor( manager ) {
+
+		super( manager );
+
+		this.type = FloatType;
+
+	}
+
+	// adapted from http://www.graphics.cornell.edu/~bjw/rgbe.html
+
+	parse( buffer ) {
+
+		const
+			/* return codes for rgbe routines */
+			//RGBE_RETURN_SUCCESS = 0,
+			RGBE_RETURN_FAILURE = - 1,
+
+			/* default error routine.  change this to change error handling */
+			rgbe_read_error = 1,
+			rgbe_write_error = 2,
+			rgbe_format_error = 3,
+			rgbe_memory_error = 4,
+			rgbe_error = function ( rgbe_error_code, msg ) {
+
+				switch ( rgbe_error_code ) {
+
+					case rgbe_read_error: console.error( 'THREE.RGBELoader Read Error: ' + ( msg || '' ) );
+						break;
+					case rgbe_write_error: console.error( 'THREE.RGBELoader Write Error: ' + ( msg || '' ) );
+						break;
+					case rgbe_format_error: console.error( 'THREE.RGBELoader Bad File Format: ' + ( msg || '' ) );
+						break;
+					default:
+					case rgbe_memory_error: console.error( 'THREE.RGBELoader: Error: ' + ( msg || '' ) );
+
+				}
+
+				return RGBE_RETURN_FAILURE;
+
+			},
+
+			/* offsets to red, green, and blue components in a data (float) pixel */
+			//RGBE_DATA_RED = 0,
+			//RGBE_DATA_GREEN = 1,
+			//RGBE_DATA_BLUE = 2,
+
+			/* number of floats per pixel, use 4 since stored in rgba image format */
+			//RGBE_DATA_SIZE = 4,
+
+			/* flags indicating which fields in an rgbe_header_info are valid */
+			RGBE_VALID_PROGRAMTYPE = 1,
+			RGBE_VALID_FORMAT = 2,
+			RGBE_VALID_DIMENSIONS = 4,
+
+			NEWLINE = '\n',
+
+			fgets = function ( buffer, lineLimit, consume ) {
+
+				const chunkSize = 128;
+
+				lineLimit = ! lineLimit ? 1024 : lineLimit;
+				let p = buffer.pos,
+					i = - 1, len = 0, s = '',
+					chunk = String.fromCharCode.apply( null, new Uint16Array( buffer.subarray( p, p + chunkSize ) ) );
+
+				while ( ( 0 > ( i = chunk.indexOf( NEWLINE ) ) ) && ( len < lineLimit ) && ( p < buffer.byteLength ) ) {
+
+					s += chunk; len += chunk.length;
+					p += chunkSize;
+					chunk += String.fromCharCode.apply( null, new Uint16Array( buffer.subarray( p, p + chunkSize ) ) );
+
+				}
+
+				if ( - 1 < i ) {
+
+					/*for (i=l-1; i>=0; i--) {
+						byteCode = m.charCodeAt(i);
+						if (byteCode > 0x7f && byteCode <= 0x7ff) byteLen++;
+						else if (byteCode > 0x7ff && byteCode <= 0xffff) byteLen += 2;
+						if (byteCode >= 0xDC00 && byteCode <= 0xDFFF) i--; //trail surrogate
+					}*/
+					if ( false !== consume ) buffer.pos += len + i + 1;
+					return s + chunk.slice( 0, i );
+
+				}
+
+				return false;
+
+			},
+
+			/* minimal header reading.  modify if you want to parse more information */
+			RGBE_ReadHeader = function ( buffer ) {
+
+
+				// regexes to parse header info fields
+				const magic_token_re = /^#\?(\S+)/,
+					gamma_re = /^\s*GAMMA\s*=\s*(\d+(\.\d+)?)\s*$/,
+					exposure_re = /^\s*EXPOSURE\s*=\s*(\d+(\.\d+)?)\s*$/,
+					format_re = /^\s*FORMAT=(\S+)\s*$/,
+					dimensions_re = /^\s*\-Y\s+(\d+)\s+\+X\s+(\d+)\s*$/,
+
+					// RGBE format header struct
+					header = {
+
+						valid: 0, /* indicate which fields are valid */
+
+						string: '', /* the actual header string */
+
+						comments: '', /* comments found in header */
+
+						programtype: 'RGBE', /* listed at beginning of file to identify it after "#?". defaults to "RGBE" */
+
+						format: '', /* RGBE format, default 32-bit_rle_rgbe */
+
+						gamma: 1.0, /* image has already been gamma corrected with given gamma. defaults to 1.0 (no correction) */
+
+						exposure: 1.0, /* a value of 1.0 in an image corresponds to <exposure> watts/steradian/m^2. defaults to 1.0 */
+
+						width: 0, height: 0 /* image dimensions, width/height */
+
+					};
+
+				let line, match;
+
+				if ( buffer.pos >= buffer.byteLength || ! ( line = fgets( buffer ) ) ) {
+
+					return rgbe_error( rgbe_read_error, 'no header found' );
+
+				}
+
+				/* if you want to require the magic token then uncomment the next line */
+				if ( ! ( match = line.match( magic_token_re ) ) ) {
+
+					return rgbe_error( rgbe_format_error, 'bad initial token' );
+
+				}
+
+				header.valid |= RGBE_VALID_PROGRAMTYPE;
+				header.programtype = match[ 1 ];
+				header.string += line + '\n';
+
+				while ( true ) {
+
+					line = fgets( buffer );
+					if ( false === line ) break;
+					header.string += line + '\n';
+
+					if ( '#' === line.charAt( 0 ) ) {
+
+						header.comments += line + '\n';
+						continue; // comment line
+
+					}
+
+					if ( match = line.match( gamma_re ) ) {
+
+						header.gamma = parseFloat( match[ 1 ], 10 );
+
+					}
+
+					if ( match = line.match( exposure_re ) ) {
+
+						header.exposure = parseFloat( match[ 1 ], 10 );
+
+					}
+
+					if ( match = line.match( format_re ) ) {
+
+						header.valid |= RGBE_VALID_FORMAT;
+						header.format = match[ 1 ];//'32-bit_rle_rgbe';
+
+					}
+
+					if ( match = line.match( dimensions_re ) ) {
+
+						header.valid |= RGBE_VALID_DIMENSIONS;
+						header.height = parseInt( match[ 1 ], 10 );
+						header.width = parseInt( match[ 2 ], 10 );
+
+					}
+
+					if ( ( header.valid & RGBE_VALID_FORMAT ) && ( header.valid & RGBE_VALID_DIMENSIONS ) ) break;
+
+				}
+
+				if ( ! ( header.valid & RGBE_VALID_FORMAT ) ) {
+
+					return rgbe_error( rgbe_format_error, 'missing format specifier' );
+
+				}
+
+				if ( ! ( header.valid & RGBE_VALID_DIMENSIONS ) ) {
+
+					return rgbe_error( rgbe_format_error, 'missing image size specifier' );
+
+				}
+
+				return header;
+
+			},
+
+			RGBE_ReadPixels_RLE = function ( buffer, w, h ) {
+
+				const scanline_width = w;
+
+				if (
+					// run length encoding is not allowed so read flat
+					( ( scanline_width < 8 ) || ( scanline_width > 0x7fff ) ) ||
+					// this file is not run length encoded
+					( ( 2 !== buffer[ 0 ] ) || ( 2 !== buffer[ 1 ] ) || ( buffer[ 2 ] & 0x80 ) )
+				) {
+
+					// return the flat buffer
+					return new Uint8Array( buffer );
+
+				}
+
+				if ( scanline_width !== ( ( buffer[ 2 ] << 8 ) | buffer[ 3 ] ) ) {
+
+					return rgbe_error( rgbe_format_error, 'wrong scanline width' );
+
+				}
+
+				const data_rgba = new Uint8Array( 4 * w * h );
+
+				if ( ! data_rgba.length ) {
+
+					return rgbe_error( rgbe_memory_error, 'unable to allocate buffer space' );
+
+				}
+
+				let offset = 0, pos = 0;
+
+				const ptr_end = 4 * scanline_width;
+				const rgbeStart = new Uint8Array( 4 );
+				const scanline_buffer = new Uint8Array( ptr_end );
+				let num_scanlines = h;
+
+				// read in each successive scanline
+				while ( ( num_scanlines > 0 ) && ( pos < buffer.byteLength ) ) {
+
+					if ( pos + 4 > buffer.byteLength ) {
+
+						return rgbe_error( rgbe_read_error );
+
+					}
+
+					rgbeStart[ 0 ] = buffer[ pos ++ ];
+					rgbeStart[ 1 ] = buffer[ pos ++ ];
+					rgbeStart[ 2 ] = buffer[ pos ++ ];
+					rgbeStart[ 3 ] = buffer[ pos ++ ];
+
+					if ( ( 2 != rgbeStart[ 0 ] ) || ( 2 != rgbeStart[ 1 ] ) || ( ( ( rgbeStart[ 2 ] << 8 ) | rgbeStart[ 3 ] ) != scanline_width ) ) {
+
+						return rgbe_error( rgbe_format_error, 'bad rgbe scanline format' );
+
+					}
+
+					// read each of the four channels for the scanline into the buffer
+					// first red, then green, then blue, then exponent
+					let ptr = 0, count;
+
+					while ( ( ptr < ptr_end ) && ( pos < buffer.byteLength ) ) {
+
+						count = buffer[ pos ++ ];
+						const isEncodedRun = count > 128;
+						if ( isEncodedRun ) count -= 128;
+
+						if ( ( 0 === count ) || ( ptr + count > ptr_end ) ) {
+
+							return rgbe_error( rgbe_format_error, 'bad scanline data' );
+
+						}
+
+						if ( isEncodedRun ) {
+
+							// a (encoded) run of the same value
+							const byteValue = buffer[ pos ++ ];
+							for ( let i = 0; i < count; i ++ ) {
+
+								scanline_buffer[ ptr ++ ] = byteValue;
+
+							}
+							//ptr += count;
+
+						} else {
+
+							// a literal-run
+							scanline_buffer.set( buffer.subarray( pos, pos + count ), ptr );
+							ptr += count; pos += count;
+
+						}
+
+					}
+
+
+					// now convert data from buffer into rgba
+					// first red, then green, then blue, then exponent (alpha)
+					const l = scanline_width; //scanline_buffer.byteLength;
+					for ( let i = 0; i < l; i ++ ) {
+
+						let off = 0;
+						data_rgba[ offset ] = scanline_buffer[ i + off ];
+						off += scanline_width; //1;
+						data_rgba[ offset + 1 ] = scanline_buffer[ i + off ];
+						off += scanline_width; //1;
+						data_rgba[ offset + 2 ] = scanline_buffer[ i + off ];
+						off += scanline_width; //1;
+						data_rgba[ offset + 3 ] = scanline_buffer[ i + off ];
+						offset += 4;
+
+					}
+
+					num_scanlines --;
+
+				}
+
+				return data_rgba;
+
+			};
+
+		const RGBEByteToRGBFloat = function ( sourceArray, sourceOffset, destArray, destOffset ) {
+
+			const e = sourceArray[ sourceOffset + 3 ];
+			const scale = Math.pow( 2.0, e - 128.0 ) / 255.0;
+
+			destArray[ destOffset + 0 ] = sourceArray[ sourceOffset + 0 ] * scale;
+			destArray[ destOffset + 1 ] = sourceArray[ sourceOffset + 1 ] * scale;
+			destArray[ destOffset + 2 ] = sourceArray[ sourceOffset + 2 ] * scale;
+
+		};
+
+		const RGBEByteToRGBHalf = function ( sourceArray, sourceOffset, destArray, destOffset ) {
+
+			const e = sourceArray[ sourceOffset + 3 ];
+			const scale = Math.pow( 2.0, e - 128.0 ) / 255.0;
+
+			destArray[ destOffset + 0 ] = DataUtils.toHalfFloat( sourceArray[ sourceOffset + 0 ] * scale );
+			destArray[ destOffset + 1 ] = DataUtils.toHalfFloat( sourceArray[ sourceOffset + 1 ] * scale );
+			destArray[ destOffset + 2 ] = DataUtils.toHalfFloat( sourceArray[ sourceOffset + 2 ] * scale );
+
+		};
+
+		const byteArray = new Uint8Array( buffer );
+		byteArray.pos = 0;
+		const rgbe_header_info = RGBE_ReadHeader( byteArray );
+
+		if ( RGBE_RETURN_FAILURE !== rgbe_header_info ) {
+
+			const w = rgbe_header_info.width,
+				h = rgbe_header_info.height,
+				image_rgba_data = RGBE_ReadPixels_RLE( byteArray.subarray( byteArray.pos ), w, h );
+
+			if ( RGBE_RETURN_FAILURE !== image_rgba_data ) {
+
+				let data, format, type;
+				let numElements;
+
+				switch ( this.type ) {
+
+					case UnsignedByteType:
+
+						data = image_rgba_data;
+						format = RGBEFormat; // handled as THREE.RGBAFormat in shaders
+						type = UnsignedByteType;
+						break;
+
+					case FloatType:
+
+						numElements = ( image_rgba_data.length / 4 ) * 3;
+						const floatArray = new Float32Array( numElements );
+
+						for ( let j = 0; j < numElements; j ++ ) {
+
+							RGBEByteToRGBFloat( image_rgba_data, j * 4, floatArray, j * 3 );
+
+						}
+
+						data = floatArray;
+						format = RGBFormat;
+						type = FloatType;
+						break;
+
+					case HalfFloatType:
+
+						numElements = ( image_rgba_data.length / 4 ) * 3;
+						const halfArray = new Uint16Array( numElements );
+
+						for ( let j = 0; j < numElements; j ++ ) {
+
+							RGBEByteToRGBHalf( image_rgba_data, j * 4, halfArray, j * 3 );
+
+						}
+
+						data = halfArray;
+						format = RGBFormat;
+						type = HalfFloatType;
+						break;
+
+					default:
+
+						console.error( 'THREE.RGBELoader: unsupported type: ', this.type );
+						break;
+
+				}
+
+				return {
+					width: w, height: h,
+					data: data,
+					header: rgbe_header_info.string,
+					gamma: rgbe_header_info.gamma,
+					exposure: rgbe_header_info.exposure,
+					format: format,
+					type: type
+				};
+
+			}
+
+		}
+
+		return null;
+
+	}
+
+	setDataType( value ) {
+
+		this.type = value;
+		return this;
+
+	}
+
+	load( url, onLoad, onProgress, onError ) {
+
+		function onLoadCallback( texture, texData ) {
+
+			switch ( texture.type ) {
+
+				case UnsignedByteType:
+
+					texture.encoding = RGBEEncoding;
+					texture.minFilter = NearestFilter;
+					texture.magFilter = NearestFilter;
+					texture.generateMipmaps = false;
+					texture.flipY = true;
+					break;
+
+				case FloatType:
+
+					texture.encoding = LinearEncoding;
+					texture.minFilter = LinearFilter;
+					texture.magFilter = LinearFilter;
+					texture.generateMipmaps = false;
+					texture.flipY = true;
+					break;
+
+				case HalfFloatType:
+
+					texture.encoding = LinearEncoding;
+					texture.minFilter = LinearFilter;
+					texture.magFilter = LinearFilter;
+					texture.generateMipmaps = false;
+					texture.flipY = true;
+					break;
+
+			}
+
+			if ( onLoad ) onLoad( texture, texData );
+
+		}
+
+		return super.load( url, onLoadCallback, onProgress, onError );
+
+	}
+
+}
+
+export { RGBELoader };
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/07/%E5%BA%93/jsm/loaders/PVRLoader/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/07/%E5%BA%93/jsm/loaders/RGBMLoader/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="迦楼罗s"
+      src="/images/HeadImage.jpg">
+  <p class="site-author-name" itemprop="name">迦楼罗s</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">466</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jialouluos" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jialouluos" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/QQ.jpg" title="QQ → &#x2F;images&#x2F;QQ.jpg"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_uv">访客数:<span id="busuanzi_value_site_uv"></span>
+  <span>&nbsp|&nbsp</span>
+  <i class="fa fa-eye"></i>
+  <span id="busuanzi_container_site_pv">本站总访问量:<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-carrot"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">迦楼罗s</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'bBAM6zIYQqUb8hAP0gi3oDcF-gzGzoHsz',
+      appKey     : 'GWxDFKNw0haev1CN60Uumcs4',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

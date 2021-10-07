@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16x16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":320,"Pisces | Gemini":240,"width":280,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="import { 	BufferAttribute, 	BufferGeometry, 	FileLoader, 	Loader } from &#39;..&#x2F;..&#x2F;..&#x2F;build&#x2F;three.module.js&#39;;  const _taskCache &#x3D; new WeakMap();  class DRACOLoader extends Loader {  	constructor( manager">
+<meta property="og:type" content="article">
+<meta property="og:title" content="迦楼罗s的博客">
+<meta property="og:url" content="http://example.com/2021/10/07/%E5%BA%93/jsm/loaders/DRACOLoader/index.html">
+<meta property="og:site_name" content="迦楼罗s的博客">
+<meta property="og:description" content="import { 	BufferAttribute, 	BufferGeometry, 	FileLoader, 	Loader } from &#39;..&#x2F;..&#x2F;..&#x2F;build&#x2F;three.module.js&#39;;  const _taskCache &#x3D; new WeakMap();  class DRACOLoader extends Loader {  	constructor( manager">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-06T16:10:49.899Z">
+<meta property="article:modified_time" content="2021-07-29T08:03:20.000Z">
+<meta property="article:author" content="迦楼罗s">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/10/07/%E5%BA%93/jsm/loaders/DRACOLoader/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 迦楼罗s的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">迦楼罗s的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">3</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">466</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/07/%E5%BA%93/jsm/loaders/DRACOLoader/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/HeadImage.jpg">
+      <meta itemprop="name" content="迦楼罗s">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="迦楼罗s的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-07 00:10:49" itemprop="dateCreated datePublished" datetime="2021-10-07T00:10:49+08:00">2021-10-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-29 16:03:20" itemprop="dateModified" datetime="2021-07-29T16:03:20+08:00">2021-07-29</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/10/07/%E5%BA%93/jsm/loaders/DRACOLoader/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/10/07/%E5%BA%93/jsm/loaders/DRACOLoader/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        import {
+	BufferAttribute,
+	BufferGeometry,
+	FileLoader,
+	Loader
+} from '../../../build/three.module.js';
+
+const _taskCache = new WeakMap();
+
+class DRACOLoader extends Loader {
+
+	constructor( manager ) {
+
+		super( manager );
+
+		this.decoderPath = '';
+		this.decoderConfig = {};
+		this.decoderBinary = null;
+		this.decoderPending = null;
+
+		this.workerLimit = 4;
+		this.workerPool = [];
+		this.workerNextTaskID = 1;
+		this.workerSourceURL = '';
+
+		this.defaultAttributeIDs = {
+			position: 'POSITION',
+			normal: 'NORMAL',
+			color: 'COLOR',
+			uv: 'TEX_COORD'
+		};
+		this.defaultAttributeTypes = {
+			position: 'Float32Array',
+			normal: 'Float32Array',
+			color: 'Float32Array',
+			uv: 'Float32Array'
+		};
+
+	}
+
+	setDecoderPath( path ) {
+
+		this.decoderPath = path;
+
+		return this;
+
+	}
+
+	setDecoderConfig( config ) {
+
+		this.decoderConfig = config;
+
+		return this;
+
+	}
+
+	setWorkerLimit( workerLimit ) {
+
+		this.workerLimit = workerLimit;
+
+		return this;
+
+	}
+
+	load( url, onLoad, onProgress, onError ) {
+
+		const loader = new FileLoader( this.manager );
+
+		loader.setPath( this.path );
+		loader.setResponseType( 'arraybuffer' );
+		loader.setRequestHeader( this.requestHeader );
+		loader.setWithCredentials( this.withCredentials );
+
+		loader.load( url, ( buffer ) => {
+
+			const taskConfig = {
+				attributeIDs: this.defaultAttributeIDs,
+				attributeTypes: this.defaultAttributeTypes,
+				useUniqueIDs: false
+			};
+
+			this.decodeGeometry( buffer, taskConfig )
+				.then( onLoad )
+				.catch( onError );
+
+		}, onProgress, onError );
+
+	}
+
+	/** @deprecated Kept for backward-compatibility with previous DRACOLoader versions. */
+	decodeDracoFile( buffer, callback, attributeIDs, attributeTypes ) {
+
+		const taskConfig = {
+			attributeIDs: attributeIDs || this.defaultAttributeIDs,
+			attributeTypes: attributeTypes || this.defaultAttributeTypes,
+			useUniqueIDs: !! attributeIDs
+		};
+
+		this.decodeGeometry( buffer, taskConfig ).then( callback );
+
+	}
+
+	decodeGeometry( buffer, taskConfig ) {
+
+		// TODO: For backward-compatibility, support 'attributeTypes' objects containing
+		// references (rather than names) to typed array constructors. These must be
+		// serialized before sending them to the worker.
+		for ( const attribute in taskConfig.attributeTypes ) {
+
+			const type = taskConfig.attributeTypes[ attribute ];
+
+			if ( type.BYTES_PER_ELEMENT !== undefined ) {
+
+				taskConfig.attributeTypes[ attribute ] = type.name;
+
+			}
+
+		}
+
+		//
+
+		const taskKey = JSON.stringify( taskConfig );
+
+		// Check for an existing task using this buffer. A transferred buffer cannot be transferred
+		// again from this thread.
+		if ( _taskCache.has( buffer ) ) {
+
+			const cachedTask = _taskCache.get( buffer );
+
+			if ( cachedTask.key === taskKey ) {
+
+				return cachedTask.promise;
+
+			} else if ( buffer.byteLength === 0 ) {
+
+				// Technically, it would be possible to wait for the previous task to complete,
+				// transfer the buffer back, and decode again with the second configuration. That
+				// is complex, and I don't know of any reason to decode a Draco buffer twice in
+				// different ways, so this is left unimplemented.
+				throw new Error(
+
+					'THREE.DRACOLoader: Unable to re-decode a buffer with different ' +
+					'settings. Buffer has already been transferred.'
+
+				);
+
+			}
+
+		}
+
+		//
+
+		let worker;
+		const taskID = this.workerNextTaskID ++;
+		const taskCost = buffer.byteLength;
+
+		// Obtain a worker and assign a task, and construct a geometry instance
+		// when the task completes.
+		const geometryPending = this._getWorker( taskID, taskCost )
+			.then( ( _worker ) => {
+
+				worker = _worker;
+
+				return new Promise( ( resolve, reject ) => {
+
+					worker._callbacks[ taskID ] = { resolve, reject };
+
+					worker.postMessage( { type: 'decode', id: taskID, taskConfig, buffer }, [ buffer ] );
+
+					// this.debug();
+
+				} );
+
+			} )
+			.then( ( message ) => this._createGeometry( message.geometry ) );
+
+		// Remove task from the task list.
+		// Note: replaced '.finally()' with '.catch().then()' block - iOS 11 support (#19416)
+		geometryPending
+			.catch( () => true )
+			.then( () => {
+
+				if ( worker && taskID ) {
+
+					this._releaseTask( worker, taskID );
+
+					// this.debug();
+
+				}
+
+			} );
+
+		// Cache the task result.
+		_taskCache.set( buffer, {
+
+			key: taskKey,
+			promise: geometryPending
+
+		} );
+
+		return geometryPending;
+
+	}
+
+	_createGeometry( geometryData ) {
+
+		const geometry = new BufferGeometry();
+
+		if ( geometryData.index ) {
+
+			geometry.setIndex( new BufferAttribute( geometryData.index.array, 1 ) );
+
+		}
+
+		for ( let i = 0; i < geometryData.attributes.length; i ++ ) {
+
+			const attribute = geometryData.attributes[ i ];
+			const name = attribute.name;
+			const array = attribute.array;
+			const itemSize = attribute.itemSize;
+
+			geometry.setAttribute( name, new BufferAttribute( array, itemSize ) );
+
+		}
+
+		return geometry;
+
+	}
+
+	_loadLibrary( url, responseType ) {
+
+		const loader = new FileLoader( this.manager );
+		loader.setPath( this.decoderPath );
+		loader.setResponseType( responseType );
+		loader.setWithCredentials( this.withCredentials );
+
+		return new Promise( ( resolve, reject ) => {
+
+			loader.load( url, resolve, undefined, reject );
+
+		} );
+
+	}
+
+	preload() {
+
+		this._initDecoder();
+
+		return this;
+
+	}
+
+	_initDecoder() {
+
+		if ( this.decoderPending ) return this.decoderPending;
+
+		const useJS = typeof WebAssembly !== 'object' || this.decoderConfig.type === 'js';
+		const librariesPending = [];
+
+		if ( useJS ) {
+
+			librariesPending.push( this._loadLibrary( 'draco_decoder.js', 'text' ) );
+
+		} else {
+
+			librariesPending.push( this._loadLibrary( 'draco_wasm_wrapper.js', 'text' ) );
+			librariesPending.push( this._loadLibrary( 'draco_decoder.wasm', 'arraybuffer' ) );
+
+		}
+
+		this.decoderPending = Promise.all( librariesPending )
+			.then( ( libraries ) => {
+
+				const jsContent = libraries[ 0 ];
+
+				if ( ! useJS ) {
+
+					this.decoderConfig.wasmBinary = libraries[ 1 ];
+
+				}
+
+				const fn = DRACOWorker.toString();
+
+				const body = [
+					'/* draco decoder */',
+					jsContent,
+					'',
+					'/* worker */',
+					fn.substring( fn.indexOf( '{' ) + 1, fn.lastIndexOf( '}' ) )
+				].join( '\n' );
+
+				this.workerSourceURL = URL.createObjectURL( new Blob( [ body ] ) );
+
+			} );
+
+		return this.decoderPending;
+
+	}
+
+	_getWorker( taskID, taskCost ) {
+
+		return this._initDecoder().then( () => {
+
+			if ( this.workerPool.length < this.workerLimit ) {
+
+				const worker = new Worker( this.workerSourceURL );
+
+				worker._callbacks = {};
+				worker._taskCosts = {};
+				worker._taskLoad = 0;
+
+				worker.postMessage( { type: 'init', decoderConfig: this.decoderConfig } );
+
+				worker.onmessage = function ( e ) {
+
+					const message = e.data;
+
+					switch ( message.type ) {
+
+						case 'decode':
+							worker._callbacks[ message.id ].resolve( message );
+							break;
+
+						case 'error':
+							worker._callbacks[ message.id ].reject( message );
+							break;
+
+						default:
+							console.error( 'THREE.DRACOLoader: Unexpected message, "' + message.type + '"' );
+
+					}
+
+				};
+
+				this.workerPool.push( worker );
+
+			} else {
+
+				this.workerPool.sort( function ( a, b ) {
+
+					return a._taskLoad > b._taskLoad ? - 1 : 1;
+
+				} );
+
+			}
+
+			const worker = this.workerPool[ this.workerPool.length - 1 ];
+			worker._taskCosts[ taskID ] = taskCost;
+			worker._taskLoad += taskCost;
+			return worker;
+
+		} );
+
+	}
+
+	_releaseTask( worker, taskID ) {
+
+		worker._taskLoad -= worker._taskCosts[ taskID ];
+		delete worker._callbacks[ taskID ];
+		delete worker._taskCosts[ taskID ];
+
+	}
+
+	debug() {
+
+		console.log( 'Task load: ', this.workerPool.map( ( worker ) => worker._taskLoad ) );
+
+	}
+
+	dispose() {
+
+		for ( let i = 0; i < this.workerPool.length; ++ i ) {
+
+			this.workerPool[ i ].terminate();
+
+		}
+
+		this.workerPool.length = 0;
+
+		return this;
+
+	}
+
+}
+
+/* WEB WORKER */
+
+function DRACOWorker() {
+
+	let decoderConfig;
+	let decoderPending;
+
+	onmessage = function ( e ) {
+
+		const message = e.data;
+
+		switch ( message.type ) {
+
+			case 'init':
+				decoderConfig = message.decoderConfig;
+				decoderPending = new Promise( function ( resolve/*, reject*/ ) {
+
+					decoderConfig.onModuleLoaded = function ( draco ) {
+
+						// Module is Promise-like. Wrap before resolving to avoid loop.
+						resolve( { draco: draco } );
+
+					};
+
+					DracoDecoderModule( decoderConfig ); // eslint-disable-line no-undef
+
+				} );
+				break;
+
+			case 'decode':
+				const buffer = message.buffer;
+				const taskConfig = message.taskConfig;
+				decoderPending.then( ( module ) => {
+
+					const draco = module.draco;
+					const decoder = new draco.Decoder();
+					const decoderBuffer = new draco.DecoderBuffer();
+					decoderBuffer.Init( new Int8Array( buffer ), buffer.byteLength );
+
+					try {
+
+						const geometry = decodeGeometry( draco, decoder, decoderBuffer, taskConfig );
+
+						const buffers = geometry.attributes.map( ( attr ) => attr.array.buffer );
+
+						if ( geometry.index ) buffers.push( geometry.index.array.buffer );
+
+						self.postMessage( { type: 'decode', id: message.id, geometry }, buffers );
+
+					} catch ( error ) {
+
+						console.error( error );
+
+						self.postMessage( { type: 'error', id: message.id, error: error.message } );
+
+					} finally {
+
+						draco.destroy( decoderBuffer );
+						draco.destroy( decoder );
+
+					}
+
+				} );
+				break;
+
+		}
+
+	};
+
+	function decodeGeometry( draco, decoder, decoderBuffer, taskConfig ) {
+
+		const attributeIDs = taskConfig.attributeIDs;
+		const attributeTypes = taskConfig.attributeTypes;
+
+		let dracoGeometry;
+		let decodingStatus;
+
+		const geometryType = decoder.GetEncodedGeometryType( decoderBuffer );
+
+		if ( geometryType === draco.TRIANGULAR_MESH ) {
+
+			dracoGeometry = new draco.Mesh();
+			decodingStatus = decoder.DecodeBufferToMesh( decoderBuffer, dracoGeometry );
+
+		} else if ( geometryType === draco.POINT_CLOUD ) {
+
+			dracoGeometry = new draco.PointCloud();
+			decodingStatus = decoder.DecodeBufferToPointCloud( decoderBuffer, dracoGeometry );
+
+		} else {
+
+			throw new Error( 'THREE.DRACOLoader: Unexpected geometry type.' );
+
+		}
+
+		if ( ! decodingStatus.ok() || dracoGeometry.ptr === 0 ) {
+
+			throw new Error( 'THREE.DRACOLoader: Decoding failed: ' + decodingStatus.error_msg() );
+
+		}
+
+		const geometry = { index: null, attributes: [] };
+
+		// Gather all vertex attributes.
+		for ( const attributeName in attributeIDs ) {
+
+			const attributeType = self[ attributeTypes[ attributeName ] ];
+
+			let attribute;
+			let attributeID;
+
+			// A Draco file may be created with default vertex attributes, whose attribute IDs
+			// are mapped 1:1 from their semantic name (POSITION, NORMAL, ...). Alternatively,
+			// a Draco file may contain a custom set of attributes, identified by known unique
+			// IDs. glTF files always do the latter, and `.drc` files typically do the former.
+			if ( taskConfig.useUniqueIDs ) {
+
+				attributeID = attributeIDs[ attributeName ];
+				attribute = decoder.GetAttributeByUniqueId( dracoGeometry, attributeID );
+
+			} else {
+
+				attributeID = decoder.GetAttributeId( dracoGeometry, draco[ attributeIDs[ attributeName ] ] );
+
+				if ( attributeID === - 1 ) continue;
+
+				attribute = decoder.GetAttribute( dracoGeometry, attributeID );
+
+			}
+
+			geometry.attributes.push( decodeAttribute( draco, decoder, dracoGeometry, attributeName, attributeType, attribute ) );
+
+		}
+
+		// Add index.
+		if ( geometryType === draco.TRIANGULAR_MESH ) {
+
+			geometry.index = decodeIndex( draco, decoder, dracoGeometry );
+
+		}
+
+		draco.destroy( dracoGeometry );
+
+		return geometry;
+
+	}
+
+	function decodeIndex( draco, decoder, dracoGeometry ) {
+
+		const numFaces = dracoGeometry.num_faces();
+		const numIndices = numFaces * 3;
+		const byteLength = numIndices * 4;
+
+		const ptr = draco._malloc( byteLength );
+		decoder.GetTrianglesUInt32Array( dracoGeometry, byteLength, ptr );
+		const index = new Uint32Array( draco.HEAPF32.buffer, ptr, numIndices ).slice();
+		draco._free( ptr );
+
+		return { array: index, itemSize: 1 };
+
+	}
+
+	function decodeAttribute( draco, decoder, dracoGeometry, attributeName, attributeType, attribute ) {
+
+		const numComponents = attribute.num_components();
+		const numPoints = dracoGeometry.num_points();
+		const numValues = numPoints * numComponents;
+		const byteLength = numValues * attributeType.BYTES_PER_ELEMENT;
+		const dataType = getDracoDataType( draco, attributeType );
+
+		const ptr = draco._malloc( byteLength );
+		decoder.GetAttributeDataArrayForAllPoints( dracoGeometry, attribute, dataType, byteLength, ptr );
+		const array = new attributeType( draco.HEAPF32.buffer, ptr, numValues ).slice();
+		draco._free( ptr );
+
+		return {
+			name: attributeName,
+			array: array,
+			itemSize: numComponents
+		};
+
+	}
+
+	function getDracoDataType( draco, attributeType ) {
+
+		switch ( attributeType ) {
+
+			case Float32Array: return draco.DT_FLOAT32;
+			case Int8Array: return draco.DT_INT8;
+			case Int16Array: return draco.DT_INT16;
+			case Int32Array: return draco.DT_INT32;
+			case Uint8Array: return draco.DT_UINT8;
+			case Uint16Array: return draco.DT_UINT16;
+			case Uint32Array: return draco.DT_UINT32;
+
+		}
+
+	}
+
+}
+
+export { DRACOLoader };
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/07/%E5%BA%93/jsm/loaders/DDSLoader/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/07/%E5%BA%93/jsm/loaders/EXRLoader/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="迦楼罗s"
+      src="/images/HeadImage.jpg">
+  <p class="site-author-name" itemprop="name">迦楼罗s</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">466</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jialouluos" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jialouluos" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/QQ.jpg" title="QQ → &#x2F;images&#x2F;QQ.jpg"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_uv">访客数:<span id="busuanzi_value_site_uv"></span>
+  <span>&nbsp|&nbsp</span>
+  <i class="fa fa-eye"></i>
+  <span id="busuanzi_container_site_pv">本站总访问量:<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-carrot"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">迦楼罗s</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'bBAM6zIYQqUb8hAP0gi3oDcF-gzGzoHsz',
+      appKey     : 'GWxDFKNw0haev1CN60Uumcs4',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

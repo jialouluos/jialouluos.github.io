@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16x16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":320,"Pisces | Gemini":240,"width":280,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="import { 	Vector3, 	Vector4 } from &#39;..&#x2F;..&#x2F;..&#x2F;build&#x2F;three.module.js&#39;;  &#x2F;**  * NURBS utils  *  * See NURBSCurve and NURBSSurface.  **&#x2F;   &#x2F;**************************************************************">
+<meta property="og:type" content="article">
+<meta property="og:title" content="迦楼罗s的博客">
+<meta property="og:url" content="http://example.com/2021/10/07/%E5%BA%93/jsm/curves/NURBSUtils/index.html">
+<meta property="og:site_name" content="迦楼罗s的博客">
+<meta property="og:description" content="import { 	Vector3, 	Vector4 } from &#39;..&#x2F;..&#x2F;..&#x2F;build&#x2F;three.module.js&#39;;  &#x2F;**  * NURBS utils  *  * See NURBSCurve and NURBSSurface.  **&#x2F;   &#x2F;**************************************************************">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-06T16:10:49.275Z">
+<meta property="article:modified_time" content="2021-07-29T08:03:20.000Z">
+<meta property="article:author" content="迦楼罗s">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/10/07/%E5%BA%93/jsm/curves/NURBSUtils/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 迦楼罗s的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">迦楼罗s的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">3</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">466</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/07/%E5%BA%93/jsm/curves/NURBSUtils/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/HeadImage.jpg">
+      <meta itemprop="name" content="迦楼罗s">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="迦楼罗s的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-07 00:10:49" itemprop="dateCreated datePublished" datetime="2021-10-07T00:10:49+08:00">2021-10-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-29 16:03:20" itemprop="dateModified" datetime="2021-07-29T16:03:20+08:00">2021-07-29</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/10/07/%E5%BA%93/jsm/curves/NURBSUtils/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/10/07/%E5%BA%93/jsm/curves/NURBSUtils/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        import {
+	Vector3,
+	Vector4
+} from '../../../build/three.module.js';
+
+/**
+ * NURBS utils
+ *
+ * See NURBSCurve and NURBSSurface.
+ **/
+
+
+/**************************************************************
+ *	NURBS Utils
+ **************************************************************/
+
+class NURBSUtils {
+
+	/*
+	Finds knot vector span.
+
+	p : degree
+	u : parametric value
+	U : knot vector
+
+	returns the span
+	*/
+	static findSpan( p, u, U ) {
+
+		const n = U.length - p - 1;
+
+		if ( u >= U[ n ] ) {
+
+			return n - 1;
+
+		}
+
+		if ( u <= U[ p ] ) {
+
+			return p;
+
+		}
+
+		let low = p;
+		let high = n;
+		let mid = Math.floor( ( low + high ) / 2 );
+
+		while ( u < U[ mid ] || u >= U[ mid + 1 ] ) {
+
+			if ( u < U[ mid ] ) {
+
+				high = mid;
+
+			} else {
+
+				low = mid;
+
+			}
+
+			mid = Math.floor( ( low + high ) / 2 );
+
+		}
+
+		return mid;
+
+	}
+
+
+	/*
+	Calculate basis functions. See The NURBS Book, page 70, algorithm A2.2
+
+	span : span in which u lies
+	u    : parametric point
+	p    : degree
+	U    : knot vector
+
+	returns array[p+1] with basis functions values.
+	*/
+	static calcBasisFunctions( span, u, p, U ) {
+
+		const N = [];
+		const left = [];
+		const right = [];
+		N[ 0 ] = 1.0;
+
+		for ( let j = 1; j <= p; ++ j ) {
+
+			left[ j ] = u - U[ span + 1 - j ];
+			right[ j ] = U[ span + j ] - u;
+
+			let saved = 0.0;
+
+			for ( let r = 0; r < j; ++ r ) {
+
+				const rv = right[ r + 1 ];
+				const lv = left[ j - r ];
+				const temp = N[ r ] / ( rv + lv );
+				N[ r ] = saved + rv * temp;
+				saved = lv * temp;
+
+			 }
+
+			 N[ j ] = saved;
+
+		 }
+
+		 return N;
+
+	}
+
+
+	/*
+	Calculate B-Spline curve points. See The NURBS Book, page 82, algorithm A3.1.
+
+	p : degree of B-Spline
+	U : knot vector
+	P : control points (x, y, z, w)
+	u : parametric point
+
+	returns point for given u
+	*/
+	static calcBSplinePoint( p, U, P, u ) {
+
+		const span = this.findSpan( p, u, U );
+		const N = this.calcBasisFunctions( span, u, p, U );
+		const C = new Vector4( 0, 0, 0, 0 );
+
+		for ( let j = 0; j <= p; ++ j ) {
+
+			const point = P[ span - p + j ];
+			const Nj = N[ j ];
+			const wNj = point.w * Nj;
+			C.x += point.x * wNj;
+			C.y += point.y * wNj;
+			C.z += point.z * wNj;
+			C.w += point.w * Nj;
+
+		}
+
+		return C;
+
+	}
+
+
+	/*
+	Calculate basis functions derivatives. See The NURBS Book, page 72, algorithm A2.3.
+
+	span : span in which u lies
+	u    : parametric point
+	p    : degree
+	n    : number of derivatives to calculate
+	U    : knot vector
+
+	returns array[n+1][p+1] with basis functions derivatives
+	*/
+	static calcBasisFunctionDerivatives( span, u, p, n, U ) {
+
+		const zeroArr = [];
+		for ( let i = 0; i <= p; ++ i )
+			zeroArr[ i ] = 0.0;
+
+		const ders = [];
+
+		for ( let i = 0; i <= n; ++ i )
+			ders[ i ] = zeroArr.slice( 0 );
+
+		const ndu = [];
+
+		for ( let i = 0; i <= p; ++ i )
+			ndu[ i ] = zeroArr.slice( 0 );
+
+		ndu[ 0 ][ 0 ] = 1.0;
+
+		const left = zeroArr.slice( 0 );
+		const right = zeroArr.slice( 0 );
+
+		for ( let j = 1; j <= p; ++ j ) {
+
+			left[ j ] = u - U[ span + 1 - j ];
+			right[ j ] = U[ span + j ] - u;
+
+			let saved = 0.0;
+
+			for ( let r = 0; r < j; ++ r ) {
+
+				const rv = right[ r + 1 ];
+				const lv = left[ j - r ];
+				ndu[ j ][ r ] = rv + lv;
+
+				const temp = ndu[ r ][ j - 1 ] / ndu[ j ][ r ];
+				ndu[ r ][ j ] = saved + rv * temp;
+				saved = lv * temp;
+
+			}
+
+			ndu[ j ][ j ] = saved;
+
+		}
+
+		for ( let j = 0; j <= p; ++ j ) {
+
+			ders[ 0 ][ j ] = ndu[ j ][ p ];
+
+		}
+
+		for ( let r = 0; r <= p; ++ r ) {
+
+			let s1 = 0;
+			let s2 = 1;
+
+			const a = [];
+			for ( let i = 0; i <= p; ++ i ) {
+
+				a[ i ] = zeroArr.slice( 0 );
+
+			}
+
+			a[ 0 ][ 0 ] = 1.0;
+
+			for ( let k = 1; k <= n; ++ k ) {
+
+				let d = 0.0;
+				const rk = r - k;
+				const pk = p - k;
+
+				if ( r >= k ) {
+
+					a[ s2 ][ 0 ] = a[ s1 ][ 0 ] / ndu[ pk + 1 ][ rk ];
+					d = a[ s2 ][ 0 ] * ndu[ rk ][ pk ];
+
+				}
+
+				const j1 = ( rk >= - 1 ) ? 1 : - rk;
+				const j2 = ( r - 1 <= pk ) ? k - 1 : p - r;
+
+				for ( let j = j1; j <= j2; ++ j ) {
+
+					a[ s2 ][ j ] = ( a[ s1 ][ j ] - a[ s1 ][ j - 1 ] ) / ndu[ pk + 1 ][ rk + j ];
+					d += a[ s2 ][ j ] * ndu[ rk + j ][ pk ];
+
+				}
+
+				if ( r <= pk ) {
+
+					a[ s2 ][ k ] = - a[ s1 ][ k - 1 ] / ndu[ pk + 1 ][ r ];
+					d += a[ s2 ][ k ] * ndu[ r ][ pk ];
+
+				}
+
+				ders[ k ][ r ] = d;
+
+				const j = s1;
+				s1 = s2;
+				s2 = j;
+
+			}
+
+		}
+
+		let r = p;
+
+		for ( let k = 1; k <= n; ++ k ) {
+
+			for ( let j = 0; j <= p; ++ j ) {
+
+				ders[ k ][ j ] *= r;
+
+			}
+
+			r *= p - k;
+
+		}
+
+		return ders;
+
+	}
+
+
+	/*
+		Calculate derivatives of a B-Spline. See The NURBS Book, page 93, algorithm A3.2.
+
+		p  : degree
+		U  : knot vector
+		P  : control points
+		u  : Parametric points
+		nd : number of derivatives
+
+		returns array[d+1] with derivatives
+		*/
+	static calcBSplineDerivatives( p, U, P, u, nd ) {
+
+		const du = nd < p ? nd : p;
+		const CK = [];
+		const span = this.findSpan( p, u, U );
+		const nders = this.calcBasisFunctionDerivatives( span, u, p, du, U );
+		const Pw = [];
+
+		for ( let i = 0; i < P.length; ++ i ) {
+
+			const point = P[ i ].clone();
+			const w = point.w;
+
+			point.x *= w;
+			point.y *= w;
+			point.z *= w;
+
+			Pw[ i ] = point;
+
+		}
+
+		for ( let k = 0; k <= du; ++ k ) {
+
+			const point = Pw[ span - p ].clone().multiplyScalar( nders[ k ][ 0 ] );
+
+			for ( let j = 1; j <= p; ++ j ) {
+
+				point.add( Pw[ span - p + j ].clone().multiplyScalar( nders[ k ][ j ] ) );
+
+			}
+
+			CK[ k ] = point;
+
+		}
+
+		for ( let k = du + 1; k <= nd + 1; ++ k ) {
+
+			CK[ k ] = new Vector4( 0, 0, 0 );
+
+		}
+
+		return CK;
+
+	}
+
+
+	/*
+	Calculate "K over I"
+
+	returns k!/(i!(k-i)!)
+	*/
+	static calcKoverI( k, i ) {
+
+		let nom = 1;
+
+		for ( let j = 2; j <= k; ++ j ) {
+
+			nom *= j;
+
+		}
+
+		let denom = 1;
+
+		for ( let j = 2; j <= i; ++ j ) {
+
+			denom *= j;
+
+		}
+
+		for ( let j = 2; j <= k - i; ++ j ) {
+
+			denom *= j;
+
+		}
+
+		return nom / denom;
+
+	}
+
+
+	/*
+	Calculate derivatives (0-nd) of rational curve. See The NURBS Book, page 127, algorithm A4.2.
+
+	Pders : result of function calcBSplineDerivatives
+
+	returns array with derivatives for rational curve.
+	*/
+	static calcRationalCurveDerivatives( Pders ) {
+
+		const nd = Pders.length;
+		const Aders = [];
+		const wders = [];
+
+		for ( let i = 0; i < nd; ++ i ) {
+
+			const point = Pders[ i ];
+			Aders[ i ] = new Vector3( point.x, point.y, point.z );
+			wders[ i ] = point.w;
+
+		}
+
+		const CK = [];
+
+		for ( let k = 0; k < nd; ++ k ) {
+
+			const v = Aders[ k ].clone();
+
+			for ( let i = 1; i <= k; ++ i ) {
+
+				v.sub( CK[ k - i ].clone().multiplyScalar( this.calcKoverI( k, i ) * wders[ i ] ) );
+
+			}
+
+			CK[ k ] = v.divideScalar( wders[ 0 ] );
+
+		}
+
+		return CK;
+
+	}
+
+
+	/*
+	Calculate NURBS curve derivatives. See The NURBS Book, page 127, algorithm A4.2.
+
+	p  : degree
+	U  : knot vector
+	P  : control points in homogeneous space
+	u  : parametric points
+	nd : number of derivatives
+
+	returns array with derivatives.
+	*/
+	static calcNURBSDerivatives( p, U, P, u, nd ) {
+
+		const Pders = this.calcBSplineDerivatives( p, U, P, u, nd );
+		return this.calcRationalCurveDerivatives( Pders );
+
+	}
+
+
+	/*
+	Calculate rational B-Spline surface point. See The NURBS Book, page 134, algorithm A4.3.
+
+	p1, p2 : degrees of B-Spline surface
+	U1, U2 : knot vectors
+	P      : control points (x, y, z, w)
+	u, v   : parametric values
+
+	returns point for given (u, v)
+	*/
+	static calcSurfacePoint( p, q, U, V, P, u, v, target ) {
+
+		const uspan = this.findSpan( p, u, U );
+		const vspan = this.findSpan( q, v, V );
+		const Nu = this.calcBasisFunctions( uspan, u, p, U );
+		const Nv = this.calcBasisFunctions( vspan, v, q, V );
+		const temp = [];
+
+		for ( let l = 0; l <= q; ++ l ) {
+
+			temp[ l ] = new Vector4( 0, 0, 0, 0 );
+			for ( let k = 0; k <= p; ++ k ) {
+
+				const point = P[ uspan - p + k ][ vspan - q + l ].clone();
+				const w = point.w;
+				point.x *= w;
+				point.y *= w;
+				point.z *= w;
+				temp[ l ].add( point.multiplyScalar( Nu[ k ] ) );
+
+			}
+
+		}
+
+		const Sw = new Vector4( 0, 0, 0, 0 );
+		for ( let l = 0; l <= q; ++ l ) {
+
+			Sw.add( temp[ l ].multiplyScalar( Nv[ l ] ) );
+
+		}
+
+		Sw.divideScalar( Sw.w );
+		target.set( Sw.x, Sw.y, Sw.z );
+
+	}
+
+}
+
+export { NURBSUtils };
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/07/%E5%BA%93/jsm/curves/NURBSSurface/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/07/%E5%BA%93/jsm/deprecated/Geometry/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="迦楼罗s"
+      src="/images/HeadImage.jpg">
+  <p class="site-author-name" itemprop="name">迦楼罗s</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">466</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jialouluos" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jialouluos" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/QQ.jpg" title="QQ → &#x2F;images&#x2F;QQ.jpg"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_uv">访客数:<span id="busuanzi_value_site_uv"></span>
+  <span>&nbsp|&nbsp</span>
+  <i class="fa fa-eye"></i>
+  <span id="busuanzi_container_site_pv">本站总访问量:<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-carrot"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">迦楼罗s</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'bBAM6zIYQqUb8hAP0gi3oDcF-gzGzoHsz',
+      appKey     : 'GWxDFKNw0haev1CN60Uumcs4',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16x16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":320,"Pisces | Gemini":240,"width":280,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="import { 	Vector2 } from &#39;..&#x2F;..&#x2F;..&#x2F;build&#x2F;three.module.js&#39;;  &#x2F;**  * Depth-of-field shader with bokeh  * ported from GLSL shader by Martins Upitis  * http:&#x2F;&#x2F;blenderartists.org&#x2F;forum&#x2F;showthread.php?23748">
+<meta property="og:type" content="article">
+<meta property="og:title" content="迦楼罗s的博客">
+<meta property="og:url" content="http://example.com/2021/10/07/%E5%BA%93/jsm/shaders/BokehShader2/index.html">
+<meta property="og:site_name" content="迦楼罗s的博客">
+<meta property="og:description" content="import { 	Vector2 } from &#39;..&#x2F;..&#x2F;..&#x2F;build&#x2F;three.module.js&#39;;  &#x2F;**  * Depth-of-field shader with bokeh  * ported from GLSL shader by Martins Upitis  * http:&#x2F;&#x2F;blenderartists.org&#x2F;forum&#x2F;showthread.php?23748">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-06T16:10:51.528Z">
+<meta property="article:modified_time" content="2021-07-29T08:03:20.000Z">
+<meta property="article:author" content="迦楼罗s">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/10/07/%E5%BA%93/jsm/shaders/BokehShader2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 迦楼罗s的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">迦楼罗s的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">3</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">466</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/07/%E5%BA%93/jsm/shaders/BokehShader2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/HeadImage.jpg">
+      <meta itemprop="name" content="迦楼罗s">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="迦楼罗s的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-07 00:10:51" itemprop="dateCreated datePublished" datetime="2021-10-07T00:10:51+08:00">2021-10-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-29 16:03:20" itemprop="dateModified" datetime="2021-07-29T16:03:20+08:00">2021-07-29</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/10/07/%E5%BA%93/jsm/shaders/BokehShader2/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/10/07/%E5%BA%93/jsm/shaders/BokehShader2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        import {
+	Vector2
+} from '../../../build/three.module.js';
+
+/**
+ * Depth-of-field shader with bokeh
+ * ported from GLSL shader by Martins Upitis
+ * http://blenderartists.org/forum/showthread.php?237488-GLSL-depth-of-field-with-bokeh-v2-4-(update)
+ *
+ * Requires #define RINGS and SAMPLES integers
+ */
+const BokehShader = {
+
+	uniforms: {
+
+		'textureWidth': { value: 1.0 },
+		'textureHeight': { value: 1.0 },
+
+		'focalDepth': { value: 1.0 },
+		'focalLength': { value: 24.0 },
+		'fstop': { value: 0.9 },
+
+		'tColor': { value: null },
+		'tDepth': { value: null },
+
+		'maxblur': { value: 1.0 },
+
+		'showFocus': { value: 0 },
+		'manualdof': { value: 0 },
+		'vignetting': { value: 0 },
+		'depthblur': { value: 0 },
+
+		'threshold': { value: 0.5 },
+		'gain': { value: 2.0 },
+		'bias': { value: 0.5 },
+		'fringe': { value: 0.7 },
+
+		'znear': { value: 0.1 },
+		'zfar': { value: 100 },
+
+		'noise': { value: 1 },
+		'dithering': { value: 0.0001 },
+		'pentagon': { value: 0 },
+
+		'shaderFocus': { value: 1 },
+		'focusCoords': { value: new Vector2() }
+
+
+	},
+
+	vertexShader: /* glsl */`
+
+		varying vec2 vUv;
+
+		void main() {
+
+			vUv = uv;
+			gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+		}`,
+
+	fragmentShader: /* glsl */`
+
+		#include <common>
+
+		varying vec2 vUv;
+
+		uniform sampler2D tColor;
+		uniform sampler2D tDepth;
+		uniform float textureWidth;
+		uniform float textureHeight;
+
+		uniform float focalDepth;  //focal distance value in meters, but you may use autofocus option below
+		uniform float focalLength; //focal length in mm
+		uniform float fstop; //f-stop value
+		uniform bool showFocus; //show debug focus point and focal range (red = focal point, green = focal range)
+
+		/*
+		make sure that these two values are the same for your camera, otherwise distances will be wrong.
+		*/
+
+		uniform float znear; // camera clipping start
+		uniform float zfar; // camera clipping end
+
+		//------------------------------------------
+		//user variables
+
+		const int samples = SAMPLES; //samples on the first ring
+		const int rings = RINGS; //ring count
+
+		const int maxringsamples = rings * samples;
+
+		uniform bool manualdof; // manual dof calculation
+		float ndofstart = 1.0; // near dof blur start
+		float ndofdist = 2.0; // near dof blur falloff distance
+		float fdofstart = 1.0; // far dof blur start
+		float fdofdist = 3.0; // far dof blur falloff distance
+
+		float CoC = 0.03; //circle of confusion size in mm (35mm film = 0.03mm)
+
+		uniform bool vignetting; // use optical lens vignetting
+
+		float vignout = 1.3; // vignetting outer border
+		float vignin = 0.0; // vignetting inner border
+		float vignfade = 22.0; // f-stops till vignete fades
+
+		uniform bool shaderFocus;
+		// disable if you use external focalDepth value
+
+		uniform vec2 focusCoords;
+		// autofocus point on screen (0.0,0.0 - left lower corner, 1.0,1.0 - upper right)
+		// if center of screen use vec2(0.5, 0.5);
+
+		uniform float maxblur;
+		//clamp value of max blur (0.0 = no blur, 1.0 default)
+
+		uniform float threshold; // highlight threshold;
+		uniform float gain; // highlight gain;
+
+		uniform float bias; // bokeh edge bias
+		uniform float fringe; // bokeh chromatic aberration / fringing
+
+		uniform bool noise; //use noise instead of pattern for sample dithering
+
+		uniform float dithering;
+
+		uniform bool depthblur; // blur the depth buffer
+		float dbsize = 1.25; // depth blur size
+
+		/*
+		next part is experimental
+		not looking good with small sample and ring count
+		looks okay starting from samples = 4, rings = 4
+		*/
+
+		uniform bool pentagon; //use pentagon as bokeh shape?
+		float feather = 0.4; //pentagon shape feather
+
+		//------------------------------------------
+
+		float penta(vec2 coords) {
+			//pentagonal shape
+			float scale = float(rings) - 1.3;
+			vec4  HS0 = vec4( 1.0,         0.0,         0.0,  1.0);
+			vec4  HS1 = vec4( 0.309016994, 0.951056516, 0.0,  1.0);
+			vec4  HS2 = vec4(-0.809016994, 0.587785252, 0.0,  1.0);
+			vec4  HS3 = vec4(-0.809016994,-0.587785252, 0.0,  1.0);
+			vec4  HS4 = vec4( 0.309016994,-0.951056516, 0.0,  1.0);
+			vec4  HS5 = vec4( 0.0        ,0.0         , 1.0,  1.0);
+
+			vec4  one = vec4( 1.0 );
+
+			vec4 P = vec4((coords),vec2(scale, scale));
+
+			vec4 dist = vec4(0.0);
+			float inorout = -4.0;
+
+			dist.x = dot( P, HS0 );
+			dist.y = dot( P, HS1 );
+			dist.z = dot( P, HS2 );
+			dist.w = dot( P, HS3 );
+
+			dist = smoothstep( -feather, feather, dist );
+
+			inorout += dot( dist, one );
+
+			dist.x = dot( P, HS4 );
+			dist.y = HS5.w - abs( P.z );
+
+			dist = smoothstep( -feather, feather, dist );
+			inorout += dist.x;
+
+			return clamp( inorout, 0.0, 1.0 );
+		}
+
+		float bdepth(vec2 coords) {
+			// Depth buffer blur
+			float d = 0.0;
+			float kernel[9];
+			vec2 offset[9];
+
+			vec2 wh = vec2(1.0/textureWidth,1.0/textureHeight) * dbsize;
+
+			offset[0] = vec2(-wh.x,-wh.y);
+			offset[1] = vec2( 0.0, -wh.y);
+			offset[2] = vec2( wh.x -wh.y);
+
+			offset[3] = vec2(-wh.x,  0.0);
+			offset[4] = vec2( 0.0,   0.0);
+			offset[5] = vec2( wh.x,  0.0);
+
+			offset[6] = vec2(-wh.x, wh.y);
+			offset[7] = vec2( 0.0,  wh.y);
+			offset[8] = vec2( wh.x, wh.y);
+
+			kernel[0] = 1.0/16.0;   kernel[1] = 2.0/16.0;   kernel[2] = 1.0/16.0;
+			kernel[3] = 2.0/16.0;   kernel[4] = 4.0/16.0;   kernel[5] = 2.0/16.0;
+			kernel[6] = 1.0/16.0;   kernel[7] = 2.0/16.0;   kernel[8] = 1.0/16.0;
+
+
+			for( int i=0; i<9; i++ ) {
+				float tmp = texture2D(tDepth, coords + offset[i]).r;
+				d += tmp * kernel[i];
+			}
+
+			return d;
+		}
+
+
+		vec3 color(vec2 coords,float blur) {
+			//processing the sample
+
+			vec3 col = vec3(0.0);
+			vec2 texel = vec2(1.0/textureWidth,1.0/textureHeight);
+
+			col.r = texture2D(tColor,coords + vec2(0.0,1.0)*texel*fringe*blur).r;
+			col.g = texture2D(tColor,coords + vec2(-0.866,-0.5)*texel*fringe*blur).g;
+			col.b = texture2D(tColor,coords + vec2(0.866,-0.5)*texel*fringe*blur).b;
+
+			vec3 lumcoeff = vec3(0.299,0.587,0.114);
+			float lum = dot(col.rgb, lumcoeff);
+			float thresh = max((lum-threshold)*gain, 0.0);
+			return col+mix(vec3(0.0),col,thresh*blur);
+		}
+
+		vec3 debugFocus(vec3 col, float blur, float depth) {
+			float edge = 0.002*depth; //distance based edge smoothing
+			float m = clamp(smoothstep(0.0,edge,blur),0.0,1.0);
+			float e = clamp(smoothstep(1.0-edge,1.0,blur),0.0,1.0);
+
+			col = mix(col,vec3(1.0,0.5,0.0),(1.0-m)*0.6);
+			col = mix(col,vec3(0.0,0.5,1.0),((1.0-e)-(1.0-m))*0.2);
+
+			return col;
+		}
+
+		float linearize(float depth) {
+			return -zfar * znear / (depth * (zfar - znear) - zfar);
+		}
+
+		float vignette() {
+			float dist = distance(vUv.xy, vec2(0.5,0.5));
+			dist = smoothstep(vignout+(fstop/vignfade), vignin+(fstop/vignfade), dist);
+			return clamp(dist,0.0,1.0);
+		}
+
+		float gather(float i, float j, int ringsamples, inout vec3 col, float w, float h, float blur) {
+			float rings2 = float(rings);
+			float step = PI*2.0 / float(ringsamples);
+			float pw = cos(j*step)*i;
+			float ph = sin(j*step)*i;
+			float p = 1.0;
+			if (pentagon) {
+				p = penta(vec2(pw,ph));
+			}
+			col += color(vUv.xy + vec2(pw*w,ph*h), blur) * mix(1.0, i/rings2, bias) * p;
+			return 1.0 * mix(1.0, i /rings2, bias) * p;
+		}
+
+		void main() {
+			//scene depth calculation
+
+			float depth = linearize(texture2D(tDepth,vUv.xy).x);
+
+			// Blur depth?
+			if ( depthblur ) {
+				depth = linearize(bdepth(vUv.xy));
+			}
+
+			//focal plane calculation
+
+			float fDepth = focalDepth;
+
+			if (shaderFocus) {
+
+				fDepth = linearize(texture2D(tDepth,focusCoords).x);
+
+			}
+
+			// dof blur factor calculation
+
+			float blur = 0.0;
+
+			if (manualdof) {
+				float a = depth-fDepth; // Focal plane
+				float b = (a-fdofstart)/fdofdist; // Far DoF
+				float c = (-a-ndofstart)/ndofdist; // Near Dof
+				blur = (a>0.0) ? b : c;
+			} else {
+				float f = focalLength; // focal length in mm
+				float d = fDepth*1000.0; // focal plane in mm
+				float o = depth*1000.0; // depth in mm
+
+				float a = (o*f)/(o-f);
+				float b = (d*f)/(d-f);
+				float c = (d-f)/(d*fstop*CoC);
+
+				blur = abs(a-b)*c;
+			}
+
+			blur = clamp(blur,0.0,1.0);
+
+			// calculation of pattern for dithering
+
+			vec2 noise = vec2(rand(vUv.xy), rand( vUv.xy + vec2( 0.4, 0.6 ) ) )*dithering*blur;
+
+			// getting blur x and y step factor
+
+			float w = (1.0/textureWidth)*blur*maxblur+noise.x;
+			float h = (1.0/textureHeight)*blur*maxblur+noise.y;
+
+			// calculation of final color
+
+			vec3 col = vec3(0.0);
+
+			if(blur < 0.05) {
+				//some optimization thingy
+				col = texture2D(tColor, vUv.xy).rgb;
+			} else {
+				col = texture2D(tColor, vUv.xy).rgb;
+				float s = 1.0;
+				int ringsamples;
+
+				for (int i = 1; i <= rings; i++) {
+					/*unboxstart*/
+					ringsamples = i * samples;
+
+					for (int j = 0 ; j < maxringsamples ; j++) {
+						if (j >= ringsamples) break;
+						s += gather(float(i), float(j), ringsamples, col, w, h, blur);
+					}
+					/*unboxend*/
+				}
+
+				col /= s; //divide by sample count
+			}
+
+			if (showFocus) {
+				col = debugFocus(col, blur, depth);
+			}
+
+			if (vignetting) {
+				col *= vignette();
+			}
+
+			gl_FragColor.rgb = col;
+			gl_FragColor.a = 1.0;
+		}`
+
+};
+
+const BokehDepthShader = {
+
+	uniforms: {
+
+		'mNear': { value: 1.0 },
+		'mFar': { value: 1000.0 },
+
+	},
+
+	vertexShader: /* glsl */`
+
+		varying float vViewZDepth;
+
+		void main() {
+
+			#include <begin_vertex>
+			#include <project_vertex>
+
+			vViewZDepth = - mvPosition.z;
+
+		}`,
+
+	fragmentShader: /* glsl */`
+
+		uniform float mNear;
+		uniform float mFar;
+
+		varying float vViewZDepth;
+
+		void main() {
+
+			float color = 1.0 - smoothstep( mNear, mFar, vViewZDepth );
+			gl_FragColor = vec4( vec3( color ), 1.0 );
+
+		}`
+
+};
+
+export { BokehShader, BokehDepthShader };
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/07/%E5%BA%93/jsm/shaders/BokehShader/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/07/%E5%BA%93/jsm/shaders/BrightnessContrastShader/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="迦楼罗s"
+      src="/images/HeadImage.jpg">
+  <p class="site-author-name" itemprop="name">迦楼罗s</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">466</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jialouluos" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jialouluos" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/QQ.jpg" title="QQ → &#x2F;images&#x2F;QQ.jpg"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_uv">访客数:<span id="busuanzi_value_site_uv"></span>
+  <span>&nbsp|&nbsp</span>
+  <i class="fa fa-eye"></i>
+  <span id="busuanzi_container_site_pv">本站总访问量:<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-carrot"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">迦楼罗s</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'bBAM6zIYQqUb8hAP0gi3oDcF-gzGzoHsz',
+      appKey     : 'GWxDFKNw0haev1CN60Uumcs4',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

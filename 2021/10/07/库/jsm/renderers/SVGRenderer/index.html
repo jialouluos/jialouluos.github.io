@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16x16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":320,"Pisces | Gemini":240,"width":280,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="import { 	Box2, 	Camera, 	Color, 	Matrix3, 	Matrix4, 	Object3D, 	Vector3 } from &#39;..&#x2F;..&#x2F;..&#x2F;build&#x2F;three.module.js&#39;; import { Projector } from &#39;..&#x2F;renderers&#x2F;Projector.js&#39;; import { RenderableFace } from">
+<meta property="og:type" content="article">
+<meta property="og:title" content="迦楼罗s的博客">
+<meta property="og:url" content="http://example.com/2021/10/07/%E5%BA%93/jsm/renderers/SVGRenderer/index.html">
+<meta property="og:site_name" content="迦楼罗s的博客">
+<meta property="og:description" content="import { 	Box2, 	Camera, 	Color, 	Matrix3, 	Matrix4, 	Object3D, 	Vector3 } from &#39;..&#x2F;..&#x2F;..&#x2F;build&#x2F;three.module.js&#39;; import { Projector } from &#39;..&#x2F;renderers&#x2F;Projector.js&#39;; import { RenderableFace } from">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-06T16:10:51.140Z">
+<meta property="article:modified_time" content="2021-07-29T08:03:20.000Z">
+<meta property="article:author" content="迦楼罗s">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/10/07/%E5%BA%93/jsm/renderers/SVGRenderer/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 迦楼罗s的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">迦楼罗s的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">3</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">466</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/07/%E5%BA%93/jsm/renderers/SVGRenderer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/HeadImage.jpg">
+      <meta itemprop="name" content="迦楼罗s">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="迦楼罗s的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-07 00:10:51" itemprop="dateCreated datePublished" datetime="2021-10-07T00:10:51+08:00">2021-10-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-29 16:03:20" itemprop="dateModified" datetime="2021-07-29T16:03:20+08:00">2021-07-29</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/10/07/%E5%BA%93/jsm/renderers/SVGRenderer/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/10/07/%E5%BA%93/jsm/renderers/SVGRenderer/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        import {
+	Box2,
+	Camera,
+	Color,
+	Matrix3,
+	Matrix4,
+	Object3D,
+	Vector3
+} from '../../../build/three.module.js';
+import { Projector } from '../renderers/Projector.js';
+import { RenderableFace } from '../renderers/Projector.js';
+import { RenderableLine } from '../renderers/Projector.js';
+import { RenderableSprite } from '../renderers/Projector.js';
+
+class SVGObject extends Object3D {
+
+	constructor( node ) {
+
+		super();
+
+		this.node = node;
+
+	}
+
+}
+
+SVGObject.prototype.isSVGObject = true;
+
+class SVGRenderer {
+
+	constructor() {
+
+		let _renderData, _elements, _lights,
+			_svgWidth, _svgHeight, _svgWidthHalf, _svgHeightHalf,
+
+			_v1, _v2, _v3,
+
+			_svgNode,
+			_pathCount = 0,
+
+			_precision = null,
+			_quality = 1,
+
+			_currentPath, _currentStyle;
+
+		const _this = this,
+			_clipBox = new Box2(),
+			_elemBox = new Box2(),
+
+			_color = new Color(),
+			_diffuseColor = new Color(),
+			_ambientLight = new Color(),
+			_directionalLights = new Color(),
+			_pointLights = new Color(),
+			_clearColor = new Color(),
+
+			_vector3 = new Vector3(), // Needed for PointLight
+			_centroid = new Vector3(),
+			_normal = new Vector3(),
+			_normalViewMatrix = new Matrix3(),
+
+			_viewMatrix = new Matrix4(),
+			_viewProjectionMatrix = new Matrix4(),
+
+			_svgPathPool = [],
+
+			_projector = new Projector(),
+			_svg = document.createElementNS( 'http://www.w3.org/2000/svg', 'svg' );
+
+		this.domElement = _svg;
+
+		this.autoClear = true;
+		this.sortObjects = true;
+		this.sortElements = true;
+
+		this.overdraw = 0.5;
+
+		this.info = {
+
+			render: {
+
+				vertices: 0,
+				faces: 0
+
+			}
+
+		};
+
+		this.setQuality = function ( quality ) {
+
+			switch ( quality ) {
+
+				case 'high': _quality = 1; break;
+				case 'low': _quality = 0; break;
+
+			}
+
+		};
+
+		this.setClearColor = function ( color ) {
+
+			_clearColor.set( color );
+
+		};
+
+		this.setPixelRatio = function () {};
+
+		this.setSize = function ( width, height ) {
+
+			_svgWidth = width; _svgHeight = height;
+			_svgWidthHalf = _svgWidth / 2; _svgHeightHalf = _svgHeight / 2;
+
+			_svg.setAttribute( 'viewBox', ( - _svgWidthHalf ) + ' ' + ( - _svgHeightHalf ) + ' ' + _svgWidth + ' ' + _svgHeight );
+			_svg.setAttribute( 'width', _svgWidth );
+			_svg.setAttribute( 'height', _svgHeight );
+
+			_clipBox.min.set( - _svgWidthHalf, - _svgHeightHalf );
+			_clipBox.max.set( _svgWidthHalf, _svgHeightHalf );
+
+		};
+
+		this.getSize = function () {
+
+			return {
+				width: _svgWidth,
+				height: _svgHeight
+			};
+
+		};
+
+		this.setPrecision = function ( precision ) {
+
+			_precision = precision;
+
+		};
+
+		function removeChildNodes() {
+
+			_pathCount = 0;
+
+			while ( _svg.childNodes.length > 0 ) {
+
+				_svg.removeChild( _svg.childNodes[ 0 ] );
+
+			}
+
+		}
+
+		function convert( c ) {
+
+			return _precision !== null ? c.toFixed( _precision ) : c;
+
+		}
+
+		this.clear = function () {
+
+			removeChildNodes();
+			_svg.style.backgroundColor = _clearColor.getStyle();
+
+		};
+
+		this.render = function ( scene, camera ) {
+
+			if ( camera instanceof Camera === false ) {
+
+				console.error( 'THREE.SVGRenderer.render: camera is not an instance of Camera.' );
+				return;
+
+			}
+
+			const background = scene.background;
+
+			if ( background && background.isColor ) {
+
+				removeChildNodes();
+				_svg.style.backgroundColor = background.getStyle();
+
+			} else if ( this.autoClear === true ) {
+
+				this.clear();
+
+			}
+
+			_this.info.render.vertices = 0;
+			_this.info.render.faces = 0;
+
+			_viewMatrix.copy( camera.matrixWorldInverse );
+			_viewProjectionMatrix.multiplyMatrices( camera.projectionMatrix, _viewMatrix );
+
+			_renderData = _projector.projectScene( scene, camera, this.sortObjects, this.sortElements );
+			_elements = _renderData.elements;
+			_lights = _renderData.lights;
+
+			_normalViewMatrix.getNormalMatrix( camera.matrixWorldInverse );
+
+			calculateLights( _lights );
+
+			 // reset accumulated path
+
+			_currentPath = '';
+			_currentStyle = '';
+
+			for ( let e = 0, el = _elements.length; e < el; e ++ ) {
+
+				const element = _elements[ e ];
+				const material = element.material;
+
+				if ( material === undefined || material.opacity === 0 ) continue;
+
+				_elemBox.makeEmpty();
+
+				if ( element instanceof RenderableSprite ) {
+
+					_v1 = element;
+					_v1.x *= _svgWidthHalf; _v1.y *= - _svgHeightHalf;
+
+					renderSprite( _v1, element, material );
+
+				} else if ( element instanceof RenderableLine ) {
+
+					_v1 = element.v1; _v2 = element.v2;
+
+					_v1.positionScreen.x *= _svgWidthHalf; _v1.positionScreen.y *= - _svgHeightHalf;
+					_v2.positionScreen.x *= _svgWidthHalf; _v2.positionScreen.y *= - _svgHeightHalf;
+
+					_elemBox.setFromPoints( [ _v1.positionScreen, _v2.positionScreen ] );
+
+					if ( _clipBox.intersectsBox( _elemBox ) === true ) {
+
+						renderLine( _v1, _v2, element, material );
+
+					}
+
+				} else if ( element instanceof RenderableFace ) {
+
+					_v1 = element.v1; _v2 = element.v2; _v3 = element.v3;
+
+					if ( _v1.positionScreen.z < - 1 || _v1.positionScreen.z > 1 ) continue;
+					if ( _v2.positionScreen.z < - 1 || _v2.positionScreen.z > 1 ) continue;
+					if ( _v3.positionScreen.z < - 1 || _v3.positionScreen.z > 1 ) continue;
+
+					_v1.positionScreen.x *= _svgWidthHalf; _v1.positionScreen.y *= - _svgHeightHalf;
+					_v2.positionScreen.x *= _svgWidthHalf; _v2.positionScreen.y *= - _svgHeightHalf;
+					_v3.positionScreen.x *= _svgWidthHalf; _v3.positionScreen.y *= - _svgHeightHalf;
+
+					if ( this.overdraw > 0 ) {
+
+						expand( _v1.positionScreen, _v2.positionScreen, this.overdraw );
+						expand( _v2.positionScreen, _v3.positionScreen, this.overdraw );
+						expand( _v3.positionScreen, _v1.positionScreen, this.overdraw );
+
+					}
+
+					_elemBox.setFromPoints( [
+						_v1.positionScreen,
+						_v2.positionScreen,
+						_v3.positionScreen
+					] );
+
+					if ( _clipBox.intersectsBox( _elemBox ) === true ) {
+
+						renderFace3( _v1, _v2, _v3, element, material );
+
+					}
+
+				}
+
+			}
+
+			flushPath(); // just to flush last svg:path
+
+			scene.traverseVisible( function ( object ) {
+
+				 if ( object.isSVGObject ) {
+
+					_vector3.setFromMatrixPosition( object.matrixWorld );
+					_vector3.applyMatrix4( _viewProjectionMatrix );
+
+					if ( _vector3.z < - 1 || _vector3.z > 1 ) return;
+
+					const x = _vector3.x * _svgWidthHalf;
+					const y = - _vector3.y * _svgHeightHalf;
+
+					const node = object.node;
+					node.setAttribute( 'transform', 'translate(' + x + ',' + y + ')' );
+
+					_svg.appendChild( node );
+
+				}
+
+			} );
+
+		};
+
+		function calculateLights( lights ) {
+
+			_ambientLight.setRGB( 0, 0, 0 );
+			_directionalLights.setRGB( 0, 0, 0 );
+			_pointLights.setRGB( 0, 0, 0 );
+
+			for ( let l = 0, ll = lights.length; l < ll; l ++ ) {
+
+				const light = lights[ l ];
+				const lightColor = light.color;
+
+				if ( light.isAmbientLight ) {
+
+					_ambientLight.r += lightColor.r;
+					_ambientLight.g += lightColor.g;
+					_ambientLight.b += lightColor.b;
+
+				} else if ( light.isDirectionalLight ) {
+
+					_directionalLights.r += lightColor.r;
+					_directionalLights.g += lightColor.g;
+					_directionalLights.b += lightColor.b;
+
+				} else if ( light.isPointLight ) {
+
+					_pointLights.r += lightColor.r;
+					_pointLights.g += lightColor.g;
+					_pointLights.b += lightColor.b;
+
+				}
+
+			}
+
+		}
+
+		function calculateLight( lights, position, normal, color ) {
+
+			for ( let l = 0, ll = lights.length; l < ll; l ++ ) {
+
+				const light = lights[ l ];
+				const lightColor = light.color;
+
+				if ( light.isDirectionalLight ) {
+
+					const lightPosition = _vector3.setFromMatrixPosition( light.matrixWorld ).normalize();
+
+					let amount = normal.dot( lightPosition );
+
+					if ( amount <= 0 ) continue;
+
+					amount *= light.intensity;
+
+					color.r += lightColor.r * amount;
+					color.g += lightColor.g * amount;
+					color.b += lightColor.b * amount;
+
+				} else if ( light.isPointLight ) {
+
+					const lightPosition = _vector3.setFromMatrixPosition( light.matrixWorld );
+
+					let amount = normal.dot( _vector3.subVectors( lightPosition, position ).normalize() );
+
+					if ( amount <= 0 ) continue;
+
+					amount *= light.distance == 0 ? 1 : 1 - Math.min( position.distanceTo( lightPosition ) / light.distance, 1 );
+
+					if ( amount == 0 ) continue;
+
+					amount *= light.intensity;
+
+					color.r += lightColor.r * amount;
+					color.g += lightColor.g * amount;
+					color.b += lightColor.b * amount;
+
+				}
+
+			}
+
+		}
+
+		function renderSprite( v1, element, material ) {
+
+			let scaleX = element.scale.x * _svgWidthHalf;
+			let scaleY = element.scale.y * _svgHeightHalf;
+
+			if ( material.isPointsMaterial ) {
+
+				scaleX *= material.size;
+				scaleY *= material.size;
+
+			}
+
+			const path = 'M' + convert( v1.x - scaleX * 0.5 ) + ',' + convert( v1.y - scaleY * 0.5 ) + 'h' + convert( scaleX ) + 'v' + convert( scaleY ) + 'h' + convert( - scaleX ) + 'z';
+			let style = '';
+
+			if ( material.isSpriteMaterial || material.isPointsMaterial ) {
+
+				style = 'fill:' + material.color.getStyle() + ';fill-opacity:' + material.opacity;
+
+			}
+
+			addPath( style, path );
+
+		}
+
+		function renderLine( v1, v2, element, material ) {
+
+			const path = 'M' + convert( v1.positionScreen.x ) + ',' + convert( v1.positionScreen.y ) + 'L' + convert( v2.positionScreen.x ) + ',' + convert( v2.positionScreen.y );
+
+			if ( material.isLineBasicMaterial ) {
+
+				let style = 'fill:none;stroke:' + material.color.getStyle() + ';stroke-opacity:' + material.opacity + ';stroke-width:' + material.linewidth + ';stroke-linecap:' + material.linecap;
+
+				if ( material.isLineDashedMaterial ) {
+
+					style = style + ';stroke-dasharray:' + material.dashSize + ',' + material.gapSize;
+
+				}
+
+				addPath( style, path );
+
+			}
+
+		}
+
+		function renderFace3( v1, v2, v3, element, material ) {
+
+			_this.info.render.vertices += 3;
+			_this.info.render.faces ++;
+
+			const path = 'M' + convert( v1.positionScreen.x ) + ',' + convert( v1.positionScreen.y ) + 'L' + convert( v2.positionScreen.x ) + ',' + convert( v2.positionScreen.y ) + 'L' + convert( v3.positionScreen.x ) + ',' + convert( v3.positionScreen.y ) + 'z';
+			let style = '';
+
+			if ( material.isMeshBasicMaterial ) {
+
+				_color.copy( material.color );
+
+				if ( material.vertexColors ) {
+
+					_color.multiply( element.color );
+
+				}
+
+			} else if ( material.isMeshLambertMaterial || material.isMeshPhongMaterial || material.isMeshStandardMaterial ) {
+
+				_diffuseColor.copy( material.color );
+
+				if ( material.vertexColors ) {
+
+					_diffuseColor.multiply( element.color );
+
+				}
+
+				_color.copy( _ambientLight );
+
+				_centroid.copy( v1.positionWorld ).add( v2.positionWorld ).add( v3.positionWorld ).divideScalar( 3 );
+
+				calculateLight( _lights, _centroid, element.normalModel, _color );
+
+				_color.multiply( _diffuseColor ).add( material.emissive );
+
+			} else if ( material.isMeshNormalMaterial ) {
+
+				_normal.copy( element.normalModel ).applyMatrix3( _normalViewMatrix ).normalize();
+
+				_color.setRGB( _normal.x, _normal.y, _normal.z ).multiplyScalar( 0.5 ).addScalar( 0.5 );
+
+			}
+
+			if ( material.wireframe ) {
+
+				style = 'fill:none;stroke:' + _color.getStyle() + ';stroke-opacity:' + material.opacity + ';stroke-width:' + material.wireframeLinewidth + ';stroke-linecap:' + material.wireframeLinecap + ';stroke-linejoin:' + material.wireframeLinejoin;
+
+			} else {
+
+				style = 'fill:' + _color.getStyle() + ';fill-opacity:' + material.opacity;
+
+			}
+
+			addPath( style, path );
+
+		}
+
+		// Hide anti-alias gaps
+
+		function expand( v1, v2, pixels ) {
+
+			let x = v2.x - v1.x, y = v2.y - v1.y;
+			const det = x * x + y * y;
+
+			if ( det === 0 ) return;
+
+			const idet = pixels / Math.sqrt( det );
+
+			x *= idet; y *= idet;
+
+			v2.x += x; v2.y += y;
+			v1.x -= x; v1.y -= y;
+
+		}
+
+		function addPath( style, path ) {
+
+			if ( _currentStyle === style ) {
+
+				_currentPath += path;
+
+			} else {
+
+				flushPath();
+
+				_currentStyle = style;
+				_currentPath = path;
+
+			}
+
+		}
+
+		function flushPath() {
+
+			if ( _currentPath ) {
+
+				_svgNode = getPathNode( _pathCount ++ );
+				_svgNode.setAttribute( 'd', _currentPath );
+				_svgNode.setAttribute( 'style', _currentStyle );
+				_svg.appendChild( _svgNode );
+
+			}
+
+			_currentPath = '';
+			_currentStyle = '';
+
+		}
+
+		function getPathNode( id ) {
+
+			if ( _svgPathPool[ id ] == null ) {
+
+				_svgPathPool[ id ] = document.createElementNS( 'http://www.w3.org/2000/svg', 'path' );
+
+				if ( _quality == 0 ) {
+
+					_svgPathPool[ id ].setAttribute( 'shape-rendering', 'crispEdges' ); //optimizeSpeed
+
+				}
+
+				return _svgPathPool[ id ];
+
+			}
+
+			return _svgPathPool[ id ];
+
+		}
+
+	}
+
+}
+
+export { SVGObject, SVGRenderer };
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/07/%E5%BA%93/jsm/renderers/Projector/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/07/%E5%BA%93/jsm/renderers/nodes/accessors/CameraNode/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="迦楼罗s"
+      src="/images/HeadImage.jpg">
+  <p class="site-author-name" itemprop="name">迦楼罗s</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">466</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jialouluos" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jialouluos" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/QQ.jpg" title="QQ → &#x2F;images&#x2F;QQ.jpg"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_uv">访客数:<span id="busuanzi_value_site_uv"></span>
+  <span>&nbsp|&nbsp</span>
+  <i class="fa fa-eye"></i>
+  <span id="busuanzi_container_site_pv">本站总访问量:<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-carrot"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">迦楼罗s</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'bBAM6zIYQqUb8hAP0gi3oDcF-gzGzoHsz',
+      appKey     : 'GWxDFKNw0haev1CN60Uumcs4',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

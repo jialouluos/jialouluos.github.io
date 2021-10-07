@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16x16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":320,"Pisces | Gemini":240,"width":280,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="import { 	LinearFilter, 	LinearMipmapLinearFilter, 	MeshBasicMaterial, 	NoBlending, 	RGBAFormat, 	ShaderMaterial, 	UniformsUtils, 	WebGLRenderTarget } from &#39;..&#x2F;..&#x2F;..&#x2F;build&#x2F;three.module.js&#39;; import { P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="迦楼罗s的博客">
+<meta property="og:url" content="http://example.com/2021/10/07/%E5%BA%93/jsm/postprocessing/AdaptiveToneMappingPass/index.html">
+<meta property="og:site_name" content="迦楼罗s的博客">
+<meta property="og:description" content="import { 	LinearFilter, 	LinearMipmapLinearFilter, 	MeshBasicMaterial, 	NoBlending, 	RGBAFormat, 	ShaderMaterial, 	UniformsUtils, 	WebGLRenderTarget } from &#39;..&#x2F;..&#x2F;..&#x2F;build&#x2F;three.module.js&#39;; import { P">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-06T16:10:50.773Z">
+<meta property="article:modified_time" content="2021-07-29T08:03:20.000Z">
+<meta property="article:author" content="迦楼罗s">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/10/07/%E5%BA%93/jsm/postprocessing/AdaptiveToneMappingPass/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 迦楼罗s的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">迦楼罗s的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">3</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">466</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/07/%E5%BA%93/jsm/postprocessing/AdaptiveToneMappingPass/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/HeadImage.jpg">
+      <meta itemprop="name" content="迦楼罗s">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="迦楼罗s的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-07 00:10:50" itemprop="dateCreated datePublished" datetime="2021-10-07T00:10:50+08:00">2021-10-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-29 16:03:20" itemprop="dateModified" datetime="2021-07-29T16:03:20+08:00">2021-07-29</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/10/07/%E5%BA%93/jsm/postprocessing/AdaptiveToneMappingPass/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/10/07/%E5%BA%93/jsm/postprocessing/AdaptiveToneMappingPass/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        import {
+	LinearFilter,
+	LinearMipmapLinearFilter,
+	MeshBasicMaterial,
+	NoBlending,
+	RGBAFormat,
+	ShaderMaterial,
+	UniformsUtils,
+	WebGLRenderTarget
+} from '../../../build/three.module.js';
+import { Pass, FullScreenQuad } from '../postprocessing/Pass.js';
+import { CopyShader } from '../shaders/CopyShader.js';
+import { LuminosityShader } from '../shaders/LuminosityShader.js';
+import { ToneMapShader } from '../shaders/ToneMapShader.js';
+
+/**
+ * Generate a texture that represents the luminosity of the current scene, adapted over time
+ * to simulate the optic nerve responding to the amount of light it is receiving.
+ * Based on a GDC2007 presentation by Wolfgang Engel titled "Post-Processing Pipeline"
+ *
+ * Full-screen tone-mapping shader based on http://www.graphics.cornell.edu/~jaf/publications/sig02_paper.pdf
+ */
+
+class AdaptiveToneMappingPass extends Pass {
+
+	constructor( adaptive, resolution ) {
+
+		super();
+
+		this.resolution = ( resolution !== undefined ) ? resolution : 256;
+		this.needsInit = true;
+		this.adaptive = adaptive !== undefined ? !! adaptive : true;
+
+		this.luminanceRT = null;
+		this.previousLuminanceRT = null;
+		this.currentLuminanceRT = null;
+
+		if ( CopyShader === undefined ) console.error( 'THREE.AdaptiveToneMappingPass relies on CopyShader' );
+
+		const copyShader = CopyShader;
+
+		this.copyUniforms = UniformsUtils.clone( copyShader.uniforms );
+
+		this.materialCopy = new ShaderMaterial( {
+
+			uniforms: this.copyUniforms,
+			vertexShader: copyShader.vertexShader,
+			fragmentShader: copyShader.fragmentShader,
+			blending: NoBlending,
+			depthTest: false
+
+		} );
+
+		if ( LuminosityShader === undefined )
+			console.error( 'THREE.AdaptiveToneMappingPass relies on LuminosityShader' );
+
+		this.materialLuminance = new ShaderMaterial( {
+
+			uniforms: UniformsUtils.clone( LuminosityShader.uniforms ),
+			vertexShader: LuminosityShader.vertexShader,
+			fragmentShader: LuminosityShader.fragmentShader,
+			blending: NoBlending
+		} );
+
+		this.adaptLuminanceShader = {
+			defines: {
+				'MIP_LEVEL_1X1': ( Math.log( this.resolution ) / Math.log( 2.0 ) ).toFixed( 1 )
+			},
+			uniforms: {
+				'lastLum': { value: null },
+				'currentLum': { value: null },
+				'minLuminance': { value: 0.01 },
+				'delta': { value: 0.016 },
+				'tau': { value: 1.0 }
+			},
+			vertexShader:
+				`varying vec2 vUv;
+
+				void main() {
+
+					vUv = uv;
+					gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+				}`,
+
+			fragmentShader:
+				`varying vec2 vUv;
+
+				uniform sampler2D lastLum;
+				uniform sampler2D currentLum;
+				uniform float minLuminance;
+				uniform float delta;
+				uniform float tau;
+
+				void main() {
+
+					vec4 lastLum = texture2D( lastLum, vUv, MIP_LEVEL_1X1 );
+					vec4 currentLum = texture2D( currentLum, vUv, MIP_LEVEL_1X1 );
+
+					float fLastLum = max( minLuminance, lastLum.r );
+					float fCurrentLum = max( minLuminance, currentLum.r );
+
+					//The adaption seems to work better in extreme lighting differences
+					//if the input luminance is squared.
+					fCurrentLum *= fCurrentLum;
+
+					// Adapt the luminance using Pattanaik's technique
+					float fAdaptedLum = fLastLum + (fCurrentLum - fLastLum) * (1.0 - exp(-delta * tau));
+					// "fAdaptedLum = sqrt(fAdaptedLum);
+					gl_FragColor.r = fAdaptedLum;
+				}`
+
+		};
+
+		this.materialAdaptiveLum = new ShaderMaterial( {
+
+			uniforms: UniformsUtils.clone( this.adaptLuminanceShader.uniforms ),
+			vertexShader: this.adaptLuminanceShader.vertexShader,
+			fragmentShader: this.adaptLuminanceShader.fragmentShader,
+			defines: Object.assign( {}, this.adaptLuminanceShader.defines ),
+			blending: NoBlending
+		} );
+
+		if ( ToneMapShader === undefined )
+			console.error( 'THREE.AdaptiveToneMappingPass relies on ToneMapShader' );
+
+		this.materialToneMap = new ShaderMaterial( {
+
+			uniforms: UniformsUtils.clone( ToneMapShader.uniforms ),
+			vertexShader: ToneMapShader.vertexShader,
+			fragmentShader: ToneMapShader.fragmentShader,
+			blending: NoBlending
+		} );
+
+		this.fsQuad = new FullScreenQuad( null );
+
+	}
+
+	render( renderer, writeBuffer, readBuffer, deltaTime/*, maskActive*/ ) {
+
+		if ( this.needsInit ) {
+
+			this.reset( renderer );
+
+			this.luminanceRT.texture.type = readBuffer.texture.type;
+			this.previousLuminanceRT.texture.type = readBuffer.texture.type;
+			this.currentLuminanceRT.texture.type = readBuffer.texture.type;
+			this.needsInit = false;
+
+		}
+
+		if ( this.adaptive ) {
+
+			//Render the luminance of the current scene into a render target with mipmapping enabled
+			this.fsQuad.material = this.materialLuminance;
+			this.materialLuminance.uniforms.tDiffuse.value = readBuffer.texture;
+			renderer.setRenderTarget( this.currentLuminanceRT );
+			this.fsQuad.render( renderer );
+
+			//Use the new luminance values, the previous luminance and the frame delta to
+			//adapt the luminance over time.
+			this.fsQuad.material = this.materialAdaptiveLum;
+			this.materialAdaptiveLum.uniforms.delta.value = deltaTime;
+			this.materialAdaptiveLum.uniforms.lastLum.value = this.previousLuminanceRT.texture;
+			this.materialAdaptiveLum.uniforms.currentLum.value = this.currentLuminanceRT.texture;
+			renderer.setRenderTarget( this.luminanceRT );
+			this.fsQuad.render( renderer );
+
+			//Copy the new adapted luminance value so that it can be used by the next frame.
+			this.fsQuad.material = this.materialCopy;
+			this.copyUniforms.tDiffuse.value = this.luminanceRT.texture;
+			renderer.setRenderTarget( this.previousLuminanceRT );
+			this.fsQuad.render( renderer );
+
+		}
+
+		this.fsQuad.material = this.materialToneMap;
+		this.materialToneMap.uniforms.tDiffuse.value = readBuffer.texture;
+
+		if ( this.renderToScreen ) {
+
+			renderer.setRenderTarget( null );
+			this.fsQuad.render( renderer );
+
+		} else {
+
+			renderer.setRenderTarget( writeBuffer );
+
+			if ( this.clear ) renderer.clear();
+
+			this.fsQuad.render( renderer );
+
+		}
+
+	}
+
+	reset() {
+
+		// render targets
+		if ( this.luminanceRT ) {
+
+			this.luminanceRT.dispose();
+
+		}
+
+		if ( this.currentLuminanceRT ) {
+
+			this.currentLuminanceRT.dispose();
+
+		}
+
+		if ( this.previousLuminanceRT ) {
+
+			this.previousLuminanceRT.dispose();
+
+		}
+
+		const pars = { minFilter: LinearFilter, magFilter: LinearFilter, format: RGBAFormat }; // was RGB format. changed to RGBA format. see discussion in #8415 / #8450
+
+		this.luminanceRT = new WebGLRenderTarget( this.resolution, this.resolution, pars );
+		this.luminanceRT.texture.name = 'AdaptiveToneMappingPass.l';
+		this.luminanceRT.texture.generateMipmaps = false;
+
+		this.previousLuminanceRT = new WebGLRenderTarget( this.resolution, this.resolution, pars );
+		this.previousLuminanceRT.texture.name = 'AdaptiveToneMappingPass.pl';
+		this.previousLuminanceRT.texture.generateMipmaps = false;
+
+		// We only need mipmapping for the current luminosity because we want a down-sampled version to sample in our adaptive shader
+		pars.minFilter = LinearMipmapLinearFilter;
+		pars.generateMipmaps = true;
+		this.currentLuminanceRT = new WebGLRenderTarget( this.resolution, this.resolution, pars );
+		this.currentLuminanceRT.texture.name = 'AdaptiveToneMappingPass.cl';
+
+		if ( this.adaptive ) {
+
+			this.materialToneMap.defines[ 'ADAPTED_LUMINANCE' ] = '';
+			this.materialToneMap.uniforms.luminanceMap.value = this.luminanceRT.texture;
+
+		}
+
+		//Put something in the adaptive luminance texture so that the scene can render initially
+		this.fsQuad.material = new MeshBasicMaterial( { color: 0x777777 } );
+		this.materialLuminance.needsUpdate = true;
+		this.materialAdaptiveLum.needsUpdate = true;
+		this.materialToneMap.needsUpdate = true;
+		// renderer.render( this.scene, this.camera, this.luminanceRT );
+		// renderer.render( this.scene, this.camera, this.previousLuminanceRT );
+		// renderer.render( this.scene, this.camera, this.currentLuminanceRT );
+
+	}
+
+	setAdaptive( adaptive ) {
+
+		if ( adaptive ) {
+
+			this.adaptive = true;
+			this.materialToneMap.defines[ 'ADAPTED_LUMINANCE' ] = '';
+			this.materialToneMap.uniforms.luminanceMap.value = this.luminanceRT.texture;
+
+		} else {
+
+			this.adaptive = false;
+			delete this.materialToneMap.defines[ 'ADAPTED_LUMINANCE' ];
+			this.materialToneMap.uniforms.luminanceMap.value = null;
+
+		}
+
+		this.materialToneMap.needsUpdate = true;
+
+	}
+
+	setAdaptionRate( rate ) {
+
+		if ( rate ) {
+
+			this.materialAdaptiveLum.uniforms.tau.value = Math.abs( rate );
+
+		}
+
+	}
+
+	setMinLuminance( minLum ) {
+
+		if ( minLum ) {
+
+			this.materialToneMap.uniforms.minLuminance.value = minLum;
+			this.materialAdaptiveLum.uniforms.minLuminance.value = minLum;
+
+		}
+
+	}
+
+	setMaxLuminance( maxLum ) {
+
+		if ( maxLum ) {
+
+			this.materialToneMap.uniforms.maxLuminance.value = maxLum;
+
+		}
+
+	}
+
+	setAverageLuminance( avgLum ) {
+
+		if ( avgLum ) {
+
+			this.materialToneMap.uniforms.averageLuminance.value = avgLum;
+
+		}
+
+	}
+
+	setMiddleGrey( middleGrey ) {
+
+		if ( middleGrey ) {
+
+			this.materialToneMap.uniforms.middleGrey.value = middleGrey;
+
+		}
+
+	}
+
+	dispose() {
+
+		if ( this.luminanceRT ) {
+
+			this.luminanceRT.dispose();
+
+		}
+
+		if ( this.previousLuminanceRT ) {
+
+			this.previousLuminanceRT.dispose();
+
+		}
+
+		if ( this.currentLuminanceRT ) {
+
+			this.currentLuminanceRT.dispose();
+
+		}
+
+		if ( this.materialLuminance ) {
+
+			this.materialLuminance.dispose();
+
+		}
+
+		if ( this.materialAdaptiveLum ) {
+
+			this.materialAdaptiveLum.dispose();
+
+		}
+
+		if ( this.materialCopy ) {
+
+			this.materialCopy.dispose();
+
+		}
+
+		if ( this.materialToneMap ) {
+
+			this.materialToneMap.dispose();
+
+		}
+
+	}
+
+}
+
+export { AdaptiveToneMappingPass };
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/07/%E5%BA%93/jsm/physics/OimoPhysics/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/07/%E5%BA%93/jsm/postprocessing/AfterimagePass/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="迦楼罗s"
+      src="/images/HeadImage.jpg">
+  <p class="site-author-name" itemprop="name">迦楼罗s</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">466</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jialouluos" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jialouluos" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/QQ.jpg" title="QQ → &#x2F;images&#x2F;QQ.jpg"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_uv">访客数:<span id="busuanzi_value_site_uv"></span>
+  <span>&nbsp|&nbsp</span>
+  <i class="fa fa-eye"></i>
+  <span id="busuanzi_container_site_pv">本站总访问量:<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-carrot"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">迦楼罗s</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'bBAM6zIYQqUb8hAP0gi3oDcF-gzGzoHsz',
+      appKey     : 'GWxDFKNw0haev1CN60Uumcs4',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

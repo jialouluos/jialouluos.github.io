@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16x16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Muse | Mist":320,"Pisces | Gemini":240,"width":280,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="{&quot;nodes&quot;:{&quot;A9543A4D-4036-4AB3-AEF1-0AE10CFDD4A6&quot;:{&quot;uuid&quot;:&quot;A9543A4D-4036-4AB3-AEF1-0AE10CFDD4A6&quot;,&quot;nodeType&quot;:&quot;Phong&quot;,&quot;position&quot;:&quot;A298C150-1E98-425D-8552-CF4690C3238E&quot;,&quot;color&quot;:&quot;DCD2B815-345D-4600-BAFD-BE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="迦楼罗s的博客">
+<meta property="og:url" content="http://example.com/2021/10/07/%E5%BA%93/nodes/displace/index.html">
+<meta property="og:site_name" content="迦楼罗s的博客">
+<meta property="og:description" content="{&quot;nodes&quot;:{&quot;A9543A4D-4036-4AB3-AEF1-0AE10CFDD4A6&quot;:{&quot;uuid&quot;:&quot;A9543A4D-4036-4AB3-AEF1-0AE10CFDD4A6&quot;,&quot;nodeType&quot;:&quot;Phong&quot;,&quot;position&quot;:&quot;A298C150-1E98-425D-8552-CF4690C3238E&quot;,&quot;color&quot;:&quot;DCD2B815-345D-4600-BAFD-BE">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-06T16:11:07.013Z">
+<meta property="article:modified_time" content="2021-07-29T08:03:20.000Z">
+<meta property="article:author" content="迦楼罗s">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/10/07/%E5%BA%93/nodes/displace/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | 迦楼罗s的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">迦楼罗s的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">3</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">466</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/07/%E5%BA%93/nodes/displace/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/HeadImage.jpg">
+      <meta itemprop="name" content="迦楼罗s">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="迦楼罗s的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-10-07 00:11:07" itemprop="dateCreated datePublished" datetime="2021-10-07T00:11:07+08:00">2021-10-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-29 16:03:20" itemprop="dateModified" datetime="2021-07-29T16:03:20+08:00">2021-07-29</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/10/07/%E5%BA%93/nodes/displace/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/10/07/%E5%BA%93/nodes/displace/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        {"nodes":{"A9543A4D-4036-4AB3-AEF1-0AE10CFDD4A6":{"uuid":"A9543A4D-4036-4AB3-AEF1-0AE10CFDD4A6","nodeType":"Phong","position":"A298C150-1E98-425D-8552-CF4690C3238E","color":"DCD2B815-345D-4600-BAFD-BE26925C60E6","specular":"DCD2B815-345D-4600-BAFD-BE26925C60E6","shininess":"5E1EEAA6-F057-4D5F-8607-E9F8265D2B0A","emissive":"BF320EA1-F523-4314-9B87-07E33F39CC6C"},"A298C150-1E98-425D-8552-CF4690C3238E":{"uuid":"A298C150-1E98-425D-8552-CF4690C3238E","nodeType":"Operator","a":"6449FE7E-56E7-490E-9CA9-9F5E9A540AFD","b":"09ECA9C2-8B78-422B-B3DA-2194BCBC5FCA","op":"+"},"6449FE7E-56E7-490E-9CA9-9F5E9A540AFD":{"uuid":"6449FE7E-56E7-490E-9CA9-9F5E9A540AFD","nodeType":"Position","scope":"local"},"09ECA9C2-8B78-422B-B3DA-2194BCBC5FCA":{"uuid":"09ECA9C2-8B78-422B-B3DA-2194BCBC5FCA","nodeType":"Operator","a":"C4573235-0C78-460A-BB35-E41470304BD5","b":"1FF6B149-BCA7-4F37-91E9-8AFA8770F084","op":"*"},"C4573235-0C78-460A-BB35-E41470304BD5":{"uuid":"C4573235-0C78-460A-BB35-E41470304BD5","nodeType":"Operator","a":"0E355E3B-23AB-4225-9477-312295B18436","b":"ABD03824-B7F8-46A4-9006-03FBA06618A9","op":"*"},"0E355E3B-23AB-4225-9477-312295B18436":{"uuid":"0E355E3B-23AB-4225-9477-312295B18436","nodeType":"Normal","scope":"local"},"ABD03824-B7F8-46A4-9006-03FBA06618A9":{"uuid":"ABD03824-B7F8-46A4-9006-03FBA06618A9","nodeType":"Switch","node":"43D31AB8-1DD6-46BE-8969-0668FAB513E2","components":"w"},"43D31AB8-1DD6-46BE-8969-0668FAB513E2":{"uuid":"43D31AB8-1DD6-46BE-8969-0668FAB513E2","nodeType":"Texture","value":"cloud","uv":"273D729E-E18D-47AE-8299-F069FDB6C43A","project":false},"273D729E-E18D-47AE-8299-F069FDB6C43A":{"uuid":"273D729E-E18D-47AE-8299-F069FDB6C43A","nodeType":"Operator","a":"C46D2A54-57A8-4649-AF9B-09D011AF3BFD","b":"C43B8DA9-AFF5-4690-B2EA-3EED061C0662","op":"+"},"C46D2A54-57A8-4649-AF9B-09D011AF3BFD":{"uuid":"C46D2A54-57A8-4649-AF9B-09D011AF3BFD","nodeType":"Operator","a":"F81EC887-A160-455B-B1DE-A0FA2B7FAC36","b":"801913CD-EC7A-47BE-A54C-3D86020B0847","op":"*"},"F81EC887-A160-455B-B1DE-A0FA2B7FAC36":{"uuid":"F81EC887-A160-455B-B1DE-A0FA2B7FAC36","nodeType":"Timer","name":"time","scope":"global","scale":1,"timeScale":false,"value":0},"801913CD-EC7A-47BE-A54C-3D86020B0847":{"uuid":"801913CD-EC7A-47BE-A54C-3D86020B0847","nodeType":"Float","name":"speed","value":0.2},"C43B8DA9-AFF5-4690-B2EA-3EED061C0662":{"uuid":"C43B8DA9-AFF5-4690-B2EA-3EED061C0662","nodeType":"UV","index":0},"1FF6B149-BCA7-4F37-91E9-8AFA8770F084":{"uuid":"1FF6B149-BCA7-4F37-91E9-8AFA8770F084","nodeType":"Float","value":2},"DCD2B815-345D-4600-BAFD-BE26925C60E6":{"uuid":"DCD2B815-345D-4600-BAFD-BE26925C60E6","nodeType":"Color","r":0,"g":0,"b":0},"5E1EEAA6-F057-4D5F-8607-E9F8265D2B0A":{"uuid":"5E1EEAA6-F057-4D5F-8607-E9F8265D2B0A","nodeType":"Float","value":30},"BF320EA1-F523-4314-9B87-07E33F39CC6C":{"uuid":"BF320EA1-F523-4314-9B87-07E33F39CC6C","nodeType":"Math","a":"F9EA5DC0-2BC8-4C38-A480-1DA3D0680AAE","b":"65010573-EE24-42A3-B32C-3945F3CF2E93","c":"ABD03824-B7F8-46A4-9006-03FBA06618A9","method":"mix"},"F9EA5DC0-2BC8-4C38-A480-1DA3D0680AAE":{"uuid":"F9EA5DC0-2BC8-4C38-A480-1DA3D0680AAE","nodeType":"Color","r":0,"g":0.32941176470588235,"b":0.8745098039215686},"65010573-EE24-42A3-B32C-3945F3CF2E93":{"uuid":"65010573-EE24-42A3-B32C-3945F3CF2E93","nodeType":"Color","r":1,"g":1,"b":1}},"materials":{"BCB86F69-822F-4F9C-838B-70F657904D05":{"uuid":"BCB86F69-822F-4F9C-838B-70F657904D05","type":"PhongNodeMaterial","fog":false,"lights":true,"vertex":"A9543A4D-4036-4AB3-AEF1-0AE10CFDD4A6","fragment":"A9543A4D-4036-4AB3-AEF1-0AE10CFDD4A6"}},"material":"BCB86F69-822F-4F9C-838B-70F657904D05"}
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/07/%E5%BA%93/nodes/caustic/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/07/%E5%BA%93/nodes/wave/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="迦楼罗s"
+      src="/images/HeadImage.jpg">
+  <p class="site-author-name" itemprop="name">迦楼罗s</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">466</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jialouluos" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jialouluos" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/images/QQ.jpg" title="QQ → &#x2F;images&#x2F;QQ.jpg"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_uv">访客数:<span id="busuanzi_value_site_uv"></span>
+  <span>&nbsp|&nbsp</span>
+  <i class="fa fa-eye"></i>
+  <span id="busuanzi_container_site_pv">本站总访问量:<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fas fa-carrot"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">迦楼罗s</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'bBAM6zIYQqUb8hAP0gi3oDcF-gzGzoHsz',
+      appKey     : 'GWxDFKNw0haev1CN60Uumcs4',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
