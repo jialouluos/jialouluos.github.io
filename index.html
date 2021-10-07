@@ -120,7 +120,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">3</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">2</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -185,7 +185,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-10-07 00:00:24 / 修改时间：14:24:47" itemprop="dateCreated datePublished" datetime="2021-10-07T00:00:24+08:00">2021-10-07</time>
+              <time title="创建时间：2021-10-07 00:00:24 / 修改时间：14:58:55" itemprop="dateCreated datePublished" datetime="2021-10-07T00:00:24+08:00">2021-10-07</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -210,197 +210,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这一片sdhasdhsahdsah&#x27;sadsadsdasdsadsdsadsadsadsadsadasdsdsadsadsdasdsadsdcsfedwedfseadassadsadsa</span><br></pre></td></tr></table></figure>
-<div  id = "canvas" style="height:500px ;width:1000px;" ></div>
-
-<script id="vs" type="x-shader/x-vertex">
-        attribute float a_Percent;
-        varying float v_Opacity;
-        uniform float u_Time;
-        uniform float u_Number;
-        uniform float u_Length;
-        uniform float u_Size;
-        uniform float u_Speed;
-        varying vec3 v_Color;
-        uniform vec3 u_Color;
-        varying float v_Percent;
-        void main(){
-            vec4 Mvposition = modelViewMatrix * vec4(position, 1.0);
-            float l = clamp(1.0 - u_Length, 0.0, 1.0);//空白部分的占比
-            gl_PointSize = clamp(fract((a_Percent + l - (u_Time * u_Speed))* u_Number) -l, 0.0, 1.0) *u_Size * (1./u_Length);
-            v_Opacity = gl_PointSize /u_Size;
-            gl_Position = projectionMatrix * Mvposition;
-    //            v_Color = vec3(fract(u_Time * 0.5), fract(u_Time*0.2), fract(u_Time*0.65));
-                v_Color =  vec3(clamp(v_Opacity +0.2,0.0,1.0),clamp(v_Opacity -0.3,0.0,1.0),clamp(v_Opacity -0.2,0.0,1.0));
-    //            if (v_Color.r<0.2 && v_Color.b<0.2 && v_Color.b<0.2){
-    //                v_Color =u_Color;
-    //            }
-            v_Percent = a_Percent;
-        }
-</script>
-<script id="fs" type="x-shader/x-fragment">
-        precision mediump float;
-        varying float v_Percent;
-        varying float v_Opacity;
-        varying vec3 v_Color;
-        void main(){
-            float Distance = distance(gl_PointCoord, vec2(0.5, 0.5));
-            gl_FragColor = vec4(v_Color,1.0);
-            if (v_Opacity<0.2){
-                gl_FragColor = vec4(0.0,0.0,1.0,1.0);
-            }
-            if (Distance>0.5){
-                discard;
-            }
-//            if(v_Percent>0.0){
-//                gl_FragColor = vec4(0.5,0.1,0.2, 1.0);
-//            }
-//            if(v_Percent>0.1){
-//                gl_FragColor = vec4(0.2,0.5,0.1, 1.0);
-//            }
-//            if(v_Percent>0.2){
-//                gl_FragColor = vec4(0.7,0.1,0.5, 1.0);
-//            }
-//            if(v_Percent>0.3){
-//                gl_FragColor = vec4(0.2,0.3,0.3, 1.0);
-//            }
-//            if(v_Percent>0.4){
-//                gl_FragColor = vec4(0.4,0.2,0.4, 1.0);
-//            }
-//            if(v_Percent>0.5){
-//                gl_FragColor = vec4(0.2,0.5,0.3, 1.0);
-//            }
-//            if(v_Percent>0.6){
-//                gl_FragColor = vec4(0.5,0.2,0.4, 1.0);
-//            }
-//            if(v_Percent>0.7){
-//                gl_FragColor = vec4(0.3,0.7,0.3, 1.0);
-//            }
-//            if(v_Percent>0.8){
-//                gl_FragColor = vec4(0.3,0.5,0.6, 1.0);
-//            }
-//            if(v_Percent>0.9){
-//                gl_FragColor = vec4(0.2,0.4,0.5, 1.0);
-//            }
-//                gl_FragColor = color;
-        }
-</script>
-<script type="module">
-    
-    import * as THREE from '/js/three-js/build/three.module.js'
-    import {OrbitControls} from "/js/three-js/jsm/controls/OrbitControls.js";
-
-    var renderer, camera, light, model, gui, scene, controls, width, height, Time = {
-        type: "f",
-        value: 0.0
-    }, material, FlyPoints;
-    let canvas = document.querySelector("#canvas");
-    width = canvas.width;
-    height = canvas.height;
-    const initRender = () => {
-        renderer = new THREE.WebGLRenderer({antialias: true});
-        renderer.setSize(width, height)
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        canvas.appendChild(renderer.domElement);
-    }
-    const initSceneAndCamera = () => {
-        scene = new THREE.Scene()
-        camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
-        camera.position.set(0, 200, 400);
-        camera.lookAt(new THREE.Vector3(0, 200, 0))
-    }
-    const initLight = () => {
-        scene.add(new THREE.AmbientLight("#404040", 1));
-        light = new THREE.DirectionalLight("#fff", 1);
-        light.position.set(200, 200, 200);
-        scene.add(light);
-    }
-    const initModel = () => {
-        const Points = [
-            new THREE.Vector3(100, 0, -100),
-            new THREE.Vector3(0, 80, 0),
-            new THREE.Vector3(-100, 0, 100),
-            new THREE.Vector3(-200, 0, -100),
-            new THREE.Vector3(-300, 0, 200),
-            new THREE.Vector3(-400, 0, 300),
-        ]
-        const uniforms = {
-            u_Time: Time,
-            u_Number: {
-                type: "f",
-                value: 5.0
-            },
-            u_Size: {
-                type: "f",
-                value: 6.0
-            },
-            u_Speed: {
-                type: "f",
-                value: 0.03
-            },
-            u_Length: {
-                type: "f",
-                value: 0.25
-            },
-            u_Color: {
-                type: "v3",
-                value: new THREE.Vector3(
-                    Math.random() * 0.6 + 0.4,
-                    Math.random() * 0.6 + 0.4,
-                    Math.random() * 0.6 + 0.4
-                )
-            }
-        }
-        const Curve3 = new THREE.CatmullRomCurve3(Points);
-        const points = Curve3.getSpacedPoints(100000);
-        let percent = new Float32Array(points.length)
-        for (let i = 0; i < percent.length; i++) {
-            percent[i] = i / percent.length;
-        }
-        const geometry = new THREE.BufferGeometry();
-        geometry.setFromPoints(points);
-        geometry.setAttribute("a_Percent", new THREE.BufferAttribute(percent, 1));
-        material = new THREE.ShaderMaterial({
-            uniforms: uniforms,
-            vertexShader: document.getElementById("vs").text,
-            fragmentShader: document.getElementById("fs").text,
-            transparent: true
-        })
-        FlyPoints = new THREE.Points(geometry, material);
-        scene.add(FlyPoints)
-    }
-    const initControls = () => {
-        controls = new OrbitControls(camera, renderer.domElement)
-    }
-
-    function onWindowResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-
-    window.addEventListener('resize', onWindowResize);
-    const animate = () => {
-        controls.update();
-        Time.value += 0.01;
-        renderer.render(scene, camera);
-        requestAnimationFrame(animate);
-    }
-    const draw = () => {
-        initRender();
-        initSceneAndCamera();
-        initLight();
-        initModel();
-        initControls();
-
-        animate();
-    }
-
-    window.onload = draw;
-
-</script>
-
+          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这一片sdhasdhsahsah&#x27;sadsadsdasdsadsdsadsadsadsadsadasdsdsadsadsdasdsadsdcsfedwedfseadassadsadsa</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/07/Three-js%E5%B0%8F%E6%A1%88%E4%BE%8B-1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -433,7 +251,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/08/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="post-title-link" itemprop="url">第一篇博客</a>
+            <a href="/2021/08/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="post-title-link" itemprop="url">markdown语法</a>
         </h2>
 
         <div class="post-meta">
@@ -450,7 +268,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-10-07 00:01:18" itemprop="dateModified" datetime="2021-10-07T00:01:18+08:00">2021-10-07</time>
+                <time title="修改时间：2021-10-07 15:11:20" itemprop="dateModified" datetime="2021-10-07T15:11:20+08:00">2021-10-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -458,7 +276,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%8D%9A%E5%AE%A2%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" itemprop="url" rel="index"><span itemprop="name">博客的第一篇文章</span></a>
+                  <a href="/categories/markdown%E8%AF%AD%E6%B3%95-%E6%80%BB%E7%BB%93%E8%87%AA%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">markdown语法-总结自用</span></a>
                 </span>
             </span>
 
@@ -475,21 +293,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div>shijienihao</div>
-</body>
-</html>
-    由于我还没有学习markdown语法所以这篇不会太长
----
-
+          <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><blockquote>
+<p>markdown语法是一种常用于说明文档的编写语法，作为前端人员更要学会和使用这种语法。</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/08/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -585,7 +399,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
