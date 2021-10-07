@@ -28,7 +28,7 @@
 <meta property="og:description" content="简介 本篇分享一下飞线的一种实现方法">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-10-06T16:00:24.485Z">
-<meta property="article:modified_time" content="2021-10-07T09:00:30.265Z">
+<meta property="article:modified_time" content="2021-10-07T15:19:52.645Z">
 <meta property="article:author" content="迦楼罗s">
 <meta property="article:tag" content="Three-js小案例">
 <meta name="twitter:card" content="summary">
@@ -190,7 +190,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-10-07 00:00:24 / 修改时间：17:00:30" itemprop="dateCreated datePublished" datetime="2021-10-07T00:00:24+08:00">2021-10-07</time>
+              <time title="创建时间：2021-10-07 00:00:24 / 修改时间：23:19:52" itemprop="dateCreated datePublished" datetime="2021-10-07T00:00:24+08:00">2021-10-07</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -237,12 +237,13 @@
         <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><blockquote>
 <p>本篇分享一下飞线的一种实现方法</p>
 </blockquote>
+<hr>
 <span id="more"></span>
-<div  id = "canvas" style="height:500px ;width:1000px;" ></div>
+<div  id = "canvas" style="height:500px ;width:1000px; position:relative" ></div>
 
 <script id="vs" type="x-shader/x-vertex">
         attribute float a_Percent;
-        varying float v_Opacity;
+        varying float v_PercentageSize;
         uniform float u_Time;
         uniform float u_Number;
         uniform float u_Length;
@@ -250,80 +251,70 @@
         uniform float u_Speed;
         varying vec3 v_Color;
         uniform vec3 u_Color;
+        uniform float u_Flag;
+        varying float v_Flag;
         varying float v_Percent;
         void main(){
             vec4 Mvposition = modelViewMatrix * vec4(position, 1.0);
+            v_Flag =u_Flag;
             float l = clamp(1.0 - u_Length, 0.0, 1.0);//空白部分的占比
             gl_PointSize = clamp(fract((a_Percent + l - (u_Time * u_Speed))* u_Number) -l, 0.0, 1.0) *u_Size * (1./u_Length);
-            v_Opacity = gl_PointSize /u_Size;
+            v_PercentageSize = gl_PointSize /u_Size;
             gl_Position = projectionMatrix * Mvposition;
-    //            v_Color = vec3(fract(u_Time * 0.5), fract(u_Time*0.2), fract(u_Time*0.65));
-                v_Color =  vec3(clamp(v_Opacity +0.2,0.0,1.0),clamp(v_Opacity -0.3,0.0,1.0),clamp(v_Opacity -0.2,0.0,1.0));
-    //            if (v_Color.r<0.2 && v_Color.b<0.2 && v_Color.b<0.2){
-    //                v_Color =u_Color;
-    //            }
+            v_Color =u_Color;
             v_Percent = a_Percent;
         }
-</script>
+    </script>
 <script id="fs" type="x-shader/x-fragment">
         precision mediump float;
+        uniform vec3 u_BackColor;
         varying float v_Percent;
-        varying float v_Opacity;
+        varying float v_PercentageSize;
+        varying float v_Flag;
         varying vec3 v_Color;
         void main(){
             float Distance = distance(gl_PointCoord, vec2(0.5, 0.5));
-            gl_FragColor = vec4(v_Color,1.0);
-            if (v_Opacity<0.2){
-                gl_FragColor = vec4(0.0,0.0,1.0,1.0);
-            }
             if (Distance>0.5){
                 discard;
             }
-//            if(v_Percent>0.0){
-//                gl_FragColor = vec4(0.5,0.1,0.2, 1.0);
-//            }
-//            if(v_Percent>0.1){
-//                gl_FragColor = vec4(0.2,0.5,0.1, 1.0);
-//            }
-//            if(v_Percent>0.2){
-//                gl_FragColor = vec4(0.7,0.1,0.5, 1.0);
-//            }
-//            if(v_Percent>0.3){
-//                gl_FragColor = vec4(0.2,0.3,0.3, 1.0);
-//            }
-//            if(v_Percent>0.4){
-//                gl_FragColor = vec4(0.4,0.2,0.4, 1.0);
-//            }
-//            if(v_Percent>0.5){
-//                gl_FragColor = vec4(0.2,0.5,0.3, 1.0);
-//            }
-//            if(v_Percent>0.6){
-//                gl_FragColor = vec4(0.5,0.2,0.4, 1.0);
-//            }
-//            if(v_Percent>0.7){
-//                gl_FragColor = vec4(0.3,0.7,0.3, 1.0);
-//            }
-//            if(v_Percent>0.8){
-//                gl_FragColor = vec4(0.3,0.5,0.6, 1.0);
-//            }
-//            if(v_Percent>0.9){
-//                gl_FragColor = vec4(0.2,0.4,0.5, 1.0);
-//            }
-//                gl_FragColor = color;
+
+            if(v_Flag<=0.2){
+                gl_FragColor = vec4(v_Color,1.0);
+            }
+            else{
+                if(v_Flag==0.3){
+                    gl_FragColor = vec4(v_PercentageSize*v_Percent,v_PercentageSize*v_Color.g,v_Percent*v_Color.b, 1.0);
+                }
+                else{
+                    gl_FragColor = vec4(v_PercentageSize*v_Color.b,v_PercentageSize*v_Color.r,v_PercentageSize*v_Color.g, 1.0);
+                }
+            }
+            if (v_PercentageSize<0.2){
+                if(v_Flag==0.1 || v_Flag==0.3 ){
+                    gl_FragColor = vec4(u_BackColor,1.0);
+                }
+                else{
+                    discard;
+                }
+            }
         }
 </script>
 <script type="module">
     
     import * as THREE from '/js/three-js/build/three.module.js'
     import {OrbitControls} from "/js/three-js/jsm/controls/OrbitControls.js";
-
+    import {GUI} from "/js/three-js/jsm/libs/dat.gui.module.js";
     var renderer, camera, light, model, gui, scene, controls, width, height, Time = {
         type: "f",
         value: 0.0
-    }, material, FlyPoints;
+    }, material, FlyPoints,uniforms;
+    var gui = new GUI();
+    
     let canvas = document.getElementById("canvas");
+    
     width = canvas.clientWidth;
     height = canvas.clientHeight;
+    
     const initRender = () => {
         renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setSize(width, height)
@@ -352,7 +343,7 @@
             new THREE.Vector3(-300, 0, 200),
             new THREE.Vector3(-400, 0, 300),
         ]
-    const uniforms = {
+        uniforms = {
             u_Time: Time,
             u_Number: {
                 type: "f",
@@ -373,10 +364,18 @@
             u_Color: {
                 type: "v3",
                 value: new THREE.Vector3(
-                    Math.random() * 0.6 + 0.4,
-                    Math.random() * 0.6 + 0.4,
-                    Math.random() * 0.6 + 0.4
+                    69/255,161/255,218/255
                 )
+            },
+            u_BackColor:{
+                type: "v3",
+                value: new THREE.Vector3(
+                    24/255,50/255,85/255
+                )
+            },
+            u_Flag:{
+                type:"f",
+                value:0.1
             }
         }
         const Curve3 = new THREE.CatmullRomCurve3(Points);
@@ -397,6 +396,60 @@
         FlyPoints = new THREE.Points(geometry, material);
         scene.add(FlyPoints)
     }
+    const initGui=()=>{
+        canvas.appendChild(gui.domElement);
+        gui.domElement.style = 'position:absolute;top:0px;right:0px;height:300xp;width:255px;';
+        const ac =  document.getElementsByClassName("a");
+        
+        // ac[0].style.position ="absolute";
+        // ac[0].style.top ="610px";
+        // ac[0].style.right ="20px";
+        // ac[0].classList = "";
+        const FlyPoint={
+            color:new THREE.Color((69/255),(161/255),(218/255)),
+            BackColor:new THREE.Color((24/255),(50/255),(85/255)),
+            style:"样式一"
+        }
+        gui.add(uniforms.u_Speed,'value',0.01,3,0.01).onChange(function (e) {
+            FlyPoints.material.uniforms.u_Speed.needsUpdate =true;
+        }).name("飞点速度");
+        gui.add(uniforms.u_Number,'value',0,6,1).onChange(function (e) {
+            FlyPoints.material.uniforms.u_Number.needsUpdate =true;
+        }).name("飞点数量");
+        gui.add(uniforms.u_Size,'value',0.0,10.0,0.1).onChange(function (e) {
+            FlyPoints.material.uniforms.u_Size.needsUpdate =true;
+        }).name("飞点大小");
+        gui.add(uniforms.u_Length,'value',0.0,1.0,0.01).onChange(function (e) {
+            FlyPoints.material.uniforms.u_Length.needsUpdate =true;
+        }).name("飞点长度");
+        gui.add(FlyPoint,'style',["样式一","样式二","样式三","样式四"]).listen().onChange(function (e) {
+            if(e==="样式一")
+                FlyPoints.material.uniforms.u_Flag.value =0.1;
+            else if(e==="样式二")
+                FlyPoints.material.uniforms.u_Flag.value =0.2;
+            else if(e==="样式三")
+                FlyPoints.material.uniforms.u_Flag.value =0.3;
+            else if(e==="样式四")
+                FlyPoints.material.uniforms.u_Flag.value =0.4;
+            FlyPoints.material.uniforms.u_Flag.needsUpdate =true;
+        }).name("样式");
+        gui.addColor(FlyPoint,'color').listen().onChange(function (e) {
+            console.log(e);
+            FlyPoints.material.uniforms.u_Color.value =  new THREE.Vector3(
+                    e.r/255,
+                    e.g/255,
+                    e.b/255)
+            FlyPoints.material.uniforms.u_Color.needsUpdate =true;
+        }).name("飞点颜色");
+        gui.addColor(FlyPoint,'BackColor').listen().onChange(function (e) {
+            console.log(e);
+            FlyPoints.material.uniforms.u_BackColor.value =  new THREE.Vector3(
+                e.r/255,
+                e.g/255,
+                e.b/255)
+            FlyPoints.material.uniforms.u_BackColor.needsUpdate =true;
+        }).name("轨迹颜色");
+    }
     const initControls = () => {
         controls = new OrbitControls(camera, renderer.domElement)
     }
@@ -415,12 +468,15 @@
         requestAnimationFrame(animate);
     }
     const draw = () => {
+         
         initRender();
+       
         initSceneAndCamera();
+        
         initLight();
         initModel();
         initControls();
-
+        initGui();
         animate();
     }
 
